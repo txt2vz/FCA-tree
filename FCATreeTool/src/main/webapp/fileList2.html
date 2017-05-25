@@ -28,8 +28,8 @@
 <script type="application/javascript">	
 
          var id = 0;    
-    	 d3.json("mushroomDendron.json", function (err, data) { 
-    	//  d3.json("liveinwaterDendron.json", function (err, data) {
+    	// d3.json("mushroomDendron.json", function (err, data) { 
+    	  d3.json("liveinwaterDendron.json", function (err, data) {
                 var tree = d3.layout.treelist()
                     .childIndent(20)
                     .nodeHeight(70);
@@ -106,9 +106,7 @@
                 }
 
                 render(data, data);
-
             });
-
 </script>
 <body>
 </body>
