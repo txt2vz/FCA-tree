@@ -1,0 +1,26 @@
+apply plugin: 'war'
+apply plugin: 'groovy'
+
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+repositories { mavenCentral() }
+
+dependencies {
+	// compile 'org.codehaus.groovy:groovy-all:2.3.6'  //for gradle 2.5
+	//	compile 'org.codehaus.groovy:groovy-all:2.4.4'   //will confilict with jetty plugin - use 2.3.10 for gradle 2.6
+
+	compile	'org.codehaus.groovy:groovy-all:2.3.10'
+
+	testCompile 'junit:junit:4.11'
+
+	//providedCompile'javax.servlet:javax.servlet-api:3.1.0'
+
+	//	providedCompile 'javax.servlet:servlet-api:2.5'
+	//runtime 'javax.servlet:jstl:1.1.2'
+	//	runtime 'javax.servlet.jsp.jstl:jstl-api:1.2'
+}
+
+gretty {
+	contextPath="/"
+	//httpPort = 8081
+}
