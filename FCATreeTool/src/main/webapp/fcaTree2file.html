@@ -12,6 +12,7 @@
 }
 .node span {  
 	margin-right: 3px;
+	 margin-top:500px;
 }
 </style>
 
@@ -19,6 +20,9 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+	<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
 	rel="stylesheet">
 <link rel="shortcut icon" href="favicon.ico">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -57,7 +61,13 @@
 			</div>
 		</div>
 		<div class="row col-md-12">
-			<div id="tree-container"></div>
+			
+			<ul><li>43one 1111111111111111111111111111111111111111111111111111111111111</li>
+			<li>two </li>
+			</ul>
+			<div class="row">
+			<div id="tree-container">ttt</div>
+			</div>
 		</div>
 	</div>
 
@@ -119,7 +129,8 @@
 			   var tree = d3.layout.treelist()
                .childIndent(20)
                .nodeHeight(70);
-			   var ul = d3.select("#tree-container").append("ul").classed("treelist", "true");
+			   var ul = d3.select("#tree-container").append("ul")
+			        .classed({"treelist" :true, "col-md-12" : true, "row":true });
                console.log ("passed ul ");
                
                function render(treeData, parent) {
@@ -141,7 +152,7 @@
                    
                    console.log ("passed noeEls 1 ");
                    
-                   var entered = nodeEls.enter().append("li").classed("node", true)
+                   var entered = nodeEls.enter().append("li").classed({"node": true, "col-md-12" : true, "row":true} )
                    .style("top", parent.y +"px")
                    .style("opacity", 0)
                    .style("height", tree.nodeHeight() + "px")
@@ -159,14 +170,14 @@
                entered.append("span").attr("class", function (d) {
                    var icon = d.children ? " glyphicon-chevron-down"
                        : d._children ? "glyphicon-chevron-right" : "";
-                   return "caret glyphicon " + icon;
+                   return "caret glyphicon col-md-12 row" + icon;
                });     
        
        //update caret direction                    
        nodeEls.select("span.caret").attr("class", function (d) {
            var icon = d.children ? " glyphicon-chevron-down"
                : d._children ? "glyphicon-chevron-right" : "";
-           return "caret glyphicon " + icon;
+           return "caret glyphicon col-md-12 row" + icon;
        });
        
        nodeEls.select("span").html(function (d) {
@@ -190,7 +201,6 @@
            }
            render(treeData, treeData);
        };
-
 	
 	</script>
 	<body>
