@@ -10,7 +10,6 @@
 	list-style: none;
 	cursor: default;
 	font-size: 14px;
-	
 }
 
 .node span {
@@ -92,11 +91,10 @@
 </script>
 
 <script>
-	function drawDendrogram(e) {		
+	function drawDendrogram(e) {
 
 		//$("#tree-container").height();   //$(document).height();
-		console.log("in drawDendrongram");
-		d3.select("svg").remove();
+		console.log("in drawDendrongram");		
 		var jsonFile = e.target.result;
 		var treeData = JSON.parse(jsonFile);
 
@@ -120,7 +118,14 @@
 		var ul = d3.select("#tree-container").append("ul").classed("treelist",
 				"true");
 		console.log("passed ul ");
+		d3.selectAll("li").remove();
 		
+		if (treeData.children)
+			treeData.children.forEach(function(child) {
+				collapse(child);
+				console.log("collapse");
+			});
+
 		// Helper functions for collapsing and expanding nodes.
 		function collapse(d) {
 			if (d.children) {
@@ -136,17 +141,11 @@
 				d.children.forEach(expand);
 				d._children = null;
 			}
-		}			
+		}
 
-		function render(root, parent) {
-			var nodes = tree.nodes(root), duration = 250;
-		
-				if (root.children)
-					treeData.children.forEach(function(child) {							
-						collapse(child);
-						console.log("collapse");
-					});					
-					
+		function render(treeData, parent) {
+			var nodes = tree.nodes(treeData), duration = 250;
+
 			function toggleChildren(d) {
 				if (d.children) {
 					d._children = d.children;
@@ -166,12 +165,9 @@
 					.style("top", parent.y + "px").style("opacity", 0).style(
 							"height", tree.nodeHeight() + "px").on("click",
 							function(d) {
-								//toggleChildren(d);
-								//render(treeData, d);
-								
 								toggleChildren(d);
-								render(root,d);
-								
+								render(treeData, d);
+
 							}).on("mouseover", function(d) {
 						d3.select(this).classed("selected", true);
 					}).on("mouseout", function(d) {
@@ -200,14 +196,14 @@
 						var sep = ", ";
 
 						//	console.log(`own object ${d.own_objects}`);
-					//	var objString = d.children ? "ownObj "
-					//			+ d.own_objects.join(sep) : "allObj "
-					//			+ d.objects.join(sep);
+						//	var objString = d.children ? "ownObj "
+						//			+ d.own_objects.join(sep) : "allObj "
+						//			+ d.objects.join(sep);
 
-					//	var attrString = d.attributes.join(sep);
-						
+						//	var attrString = d.attributes.join(sep);
+
 						var max = 150;
-						var returnString = "";
+						var returnString = ""; 
 						var objString = "empty";
 						var attrString = "empty";
 						if (d.objects.toString())
@@ -219,10 +215,10 @@
 							objString = objString.substring(0, max) + '...';
 						if (attrString.length > max)
 							attrString = attrString.substring(0, max) + '...';
-						
-						return "Node: " + d.Node + 
-						        "<br /> <span style=color:blue>Objects: "
-								+ objString + "<br />" + "Attributes: "
+
+						return "<strong> Node: " + d.Node
+								+ "</strong><br /> <span style=color:blue>Objects: "
+								+ objString + "</span> <br />" + "<span style=color:green> Attributes: "
 								+ attrString + "</span>";
 					})
 
@@ -233,14 +229,14 @@
 				return d.x + "px";
 			}).style("opacity", 1);
 			nodeEls.exit().remove();
-		} 
-		
-	root = treeData;
-			root.children.forEach(function(child) {
-				collapse(child);
-			});
-		
-		render(root, root); 
+		}
+
+		//root = treeData;
+		//	treeData.children.forEach(function(child) {
+		//		collapse(child);
+		//	});
+
+		render(treeData, treeData);
 	};
 </script>
 <body>
