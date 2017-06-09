@@ -38,7 +38,7 @@
                 //y increases every time a child is added to the list 
             	
             	//laurie - change start position - maybe a better way
-                var x = 0, y = 300;
+                var x = 0, y = 180;
                 visit(function (n, index, parent) {
                     x = parent ? parent.x + childIndent : 0;
                     y = y + nodeHeight;

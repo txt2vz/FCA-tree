@@ -26,29 +26,13 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
 
-<title>FCA Tree Tool</title>
+<title>FCA Tree Tool </title>
 
 <div class="container  col-md-12">
-	<h1>FCA Tree Tool</h1>
-	<p>Select fields, choose a valid JSON file and upload/draw:</p>
+	<h1>FCA Tree Tool (file list view)</h1>
+	<p>Select a valid JSON file and upload/draw:</p>
 	<div class="well col-md-12">
 		<div class="row">
-			<div class="col-md-3">
-
-				<input type="checkbox" id="attributes" name="attributes">
-				Show Attributes <br /> <input type="checkbox" id="objects"
-					name="objects"> Show Objects <br /> <input type="checkbox"
-					id="objectCount" name="objectCount"> Show Object Count
-			</div>
-
-			<div class="col-md-3">
-				Show Tree:
-				<form id="expanded">
-					<input type="radio" id="full" name="type" value="full">
-					Fully Expanded <br /> <input type="radio" id="oneLevel"
-						name="type" value="oneLevel" checked="true"> One Level
-				</form>
-			</div>
 
 			<div class="col-md-3">
 				<input type="file" id="files" />
@@ -57,188 +41,201 @@
 		</div>
 	</div>
 	<div class="row col-md-12">
-		<div id="tree-container">
-			7887fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</div>
+		<div id="tree-container"></div>
 	</div>
-</div>
 
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="treelist.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script type="text/javascript" src="treelist.js"></script>
 
-<script>
-	var fileInput = $('#files');
-	var uploadButton = $('#upload');
+	<script>
+		var fileInput = $('#files');
+		var uploadButton = $('#upload');
 
-	uploadButton.on('click', function() {
-		if (!window.FileReader) {
-			alert('Your browser is not supported')
-		}
-		var input = fileInput.get(0);
-
-		// Create a reader object
-		var reader = new FileReader();
-		if (input.files.length) {
-			var textFile = input.files[0];
-			reader.readAsText(textFile);
-
-			console.log("text file " + textFile);
-			$(reader).on('load', drawDendrogram);
-		} else {
-			alert('Please select a valid json file before continuing')
-		}
-	});
-</script>
-
-<script>
-	function drawDendrogram(e) {
-
-		//$("#tree-container").height();   //$(document).height();
-		console.log("in drawDendrongram");		
-		var jsonFile = e.target.result;
-		var treeData = JSON.parse(jsonFile);
-
-		var fillColour = "mediumslateblue";
-		// Calculate total nodes, max label length
-		var totalNodes = 0;
-		var maxLabelLength = 20;
-
-		var panSpeed = 200;
-		var panBoundary = 20; // Within 20px from edges will pan when dragging.
-		// Misc. variables
-		var i = 0;
-		var duration = 750;
-		var root;
-
-		// size of the diagram
-		var viewerWidth = $(document).width();
-		var viewerHeight = $(document).height();
-
-		var tree = d3.layout.treelist().childIndent(20).nodeHeight(70);
-		var ul = d3.select("#tree-container").append("ul").classed("treelist",
-				"true");
-		console.log("passed ul ");
-		d3.selectAll("li").remove();
-		
-		if (treeData.children)
-			treeData.children.forEach(function(child) {
-				collapse(child);
-				console.log("collapse");
-			});
-
-		// Helper functions for collapsing and expanding nodes.
-		function collapse(d) {
-			if (d.children) {
-				d._children = d.children;
-				d._children.forEach(collapse);
-				d.children = null;
+		uploadButton.on('click', function() {
+			if (!window.FileReader) {
+				alert('Your browser is not supported')
 			}
-		}
+			var input = fileInput.get(0);
 
-		function expand(d) {
-			if (d._children) {
-				d.children = d._children;
-				d.children.forEach(expand);
-				d._children = null;
+			// Create a reader object
+			var reader = new FileReader();
+			if (input.files.length) {
+				var textFile = input.files[0];
+				reader.readAsText(textFile);
+
+				console.log("text file " + textFile);
+				$(reader).on('load', drawDendrogram);
+			} else {
+				alert('Please select a valid json file before continuing')
 			}
-		}
+		});
+	</script>
 
-		function render(treeData, parent) {
-			var nodes = tree.nodes(treeData), duration = 250;
+	<script>
+		function drawDendrogram(e) {
 
-			function toggleChildren(d) {
+			//$("#tree-container").height();   //$(document).height();
+			console.log("in drawDendrongram");
+			var jsonFile = e.target.result;
+			var treeData = JSON.parse(jsonFile);
+
+			var fillColour = "mediumslateblue";
+			// Calculate total nodes, max label length
+			var totalNodes = 0;
+			var maxLabelLength = 20;
+
+			var panSpeed = 200;
+			var panBoundary = 20; // Within 20px from edges will pan when dragging.
+			// Misc. variables
+			var i = 0;
+			var duration = 750;
+			var root;
+
+			// size of the diagram
+			var viewerWidth = $(document).width();
+			var viewerHeight = $(document).height();
+
+			var tree = d3.layout.treelist().childIndent(20).nodeHeight(70);
+			var ul = d3.select("#tree-container").append("ul").classed(
+					"treelist", "true");
+			console.log("passed ul ");
+			d3.selectAll("li").remove();
+
+			if (treeData.children)
+				treeData.children.forEach(function(child) {
+					collapse(child);
+					console.log("collapse");
+				});
+
+			// Helper functions for collapsing and expanding nodes.
+			function collapse(d) {
 				if (d.children) {
 					d._children = d.children;
+					d._children.forEach(collapse);
 					d.children = null;
-				} else if (d._children) {
+				}
+			}
+
+			function expand(d) {
+				if (d._children) {
 					d.children = d._children;
+					d.children.forEach(expand);
 					d._children = null;
 				}
 			}
-			var nodeEls = ul.selectAll("li.node").data(nodes, function(d) {
-				return d.id || (d.id = ++i);
-			});
 
-			console.log("passed noeEls 1 ");
+			function render(treeData, parent) {
+				var nodes = tree.nodes(treeData), duration = 250;
 
-			var entered = nodeEls.enter().append("li").classed("node", true)
-					.style("top", parent.y + "px").style("opacity", 0).style(
-							"height", tree.nodeHeight() + "px").on("click",
-							function(d) {
-								toggleChildren(d);
-								render(treeData, d);
+				function toggleChildren(d) {
+					if (d.children) {
+						d._children = d.children;
+						d.children = null;
+					} else if (d._children) {
+						d.children = d._children;
+						d._children = null;
+					}
+				}
+				var nodeEls = ul.selectAll("li.node").data(nodes, function(d) {
+					return d.id || (d.id = ++i);
+				});
 
-							}).on("mouseover", function(d) {
-						d3.select(this).classed("selected", true);
-					}).on("mouseout", function(d) {
-						d3.selectAll(".selected").classed("selected", false);
-					});
-			//add arrows if it is a folder
-			entered.append("span").attr(
-					"class",
-					function(d) {
-						var icon = d.children ? " glyphicon-chevron-down"
-								: d._children ? "glyphicon-chevron-right" : "";
-						return "caret glyphicon " + icon;
-					});
+				console.log("passed noeEls 1 ");
 
-			//update caret direction                    
-			nodeEls.select("span.caret").attr(
-					"class",
-					function(d) {
-						var icon = d.children ? " glyphicon-chevron-down"
-								: d._children ? "glyphicon-chevron-right" : "";
-						return "caret glyphicon " + icon;
-					});
+				var entered = nodeEls.enter().append("li")
+						.classed("node", true).style("top", parent.y + "px")
+						.style("opacity", 0).style("height",
+								tree.nodeHeight() + "px").on("click",
+								function(d) {
+									toggleChildren(d);
+									render(treeData, d);
 
-			nodeEls.select("span").html(
-					function(d) {
-						var sep = ", ";
+								}).on("mouseover", function(d) {
+							d3.select(this).classed("selected", true);
+						}).on(
+								"mouseout",
+								function(d) {
+									d3.selectAll(".selected").classed(
+											"selected", false);
+								});
+				//add arrows if it is a folder
+				entered.append("span").attr(
+						"class",
+						function(d) {
+							var icon = d.children ? " glyphicon-chevron-down"
+									: d._children ? "glyphicon-chevron-right"
+											: "";
+							return "caret glyphicon " + icon;
+						});
 
-						//	console.log(`own object ${d.own_objects}`);
-						//	var objString = d.children ? "ownObj "
-						//			+ d.own_objects.join(sep) : "allObj "
-						//			+ d.objects.join(sep);
+				//update caret direction                    
+				nodeEls.select("span.caret").attr(
+						"class",
+						function(d) {
+							var icon = d.children ? " glyphicon-chevron-down"
+									: d._children ? "glyphicon-chevron-right"
+											: "";
+							return "caret glyphicon " + icon;
+						});
 
-						//	var attrString = d.attributes.join(sep);
+				nodeEls
+						.select("span")
+						.html(
+								function(d) {
+									var sep = ", ";
 
-						var max = 150;
-						var returnString = ""; 
-						var objString = "empty";
-						var attrString = "empty";
-						if (d.objects.toString())
-							objString = d.objects.toString();
-						if (d.attributes.toString())
-							attrString = d.attributes.toString();
+									//	console.log(`own object ${d.own_objects}`);
+									//	var objString = d.children ? "ownObj "
+									//			+ d.own_objects.join(sep) : "allObj "
+									//			+ d.objects.join(sep);
 
-						if (objString.length > max)
-							objString = objString.substring(0, max) + '...';
-						if (attrString.length > max)
-							attrString = attrString.substring(0, max) + '...';
+									//	var attrString = d.attributes.join(sep);
 
-						return "<strong> Node: " + d.Node
-								+ "</strong><br /> <span style=color:blue>Objects: "
-								+ objString + "</span> <br />" + "<span style=color:green> Attributes: "
-								+ attrString + "</span>";
-					})
+									var max = 150;
+									var returnString = "";
+									var objString = "empty";
+									var attrString = "empty";
+									if (d.objects.toString())
+										objString = d.objects.toString();
+									if (d.attributes.toString())
+										attrString = d.attributes.toString();
 
-			//update position with transition
-			nodeEls.transition().duration(duration).style("top", function(d) {
-				return (d.y - tree.nodeHeight()) + "px";
-			}).style("left", function(d) {
-				return d.x + "px";
-			}).style("opacity", 1);
-			nodeEls.exit().remove();
-		}
+									if (objString.length > max)
+										objString = objString.substring(0, max)
+												+ '...';
+									if (attrString.length > max)
+										attrString = attrString.substring(0,
+												max)
+												+ '...';
 
-		//root = treeData;
-		//	treeData.children.forEach(function(child) {
-		//		collapse(child);
-		//	});
+									return "<strong> Node: "
+											+ d.Node
+											+ "</strong><br /> <span style=color:blue>Objects: "
+											+ objString
+											+ "</span> <br />"
+											+ "<span style=color:green> Attributes: "
+											+ attrString + "</span>";
+								})
 
-		render(treeData, treeData);
-	};
-</script>
-<body>
-</body>
-</html>
+				//update position with transition
+				nodeEls.transition().duration(duration).style("top",
+						function(d) {
+							return (d.y - tree.nodeHeight()) + "px";
+						}).style("left", function(d) {
+					return d.x + "px";
+				}).style("opacity", 1);
+				nodeEls.exit().remove();
+			}
+
+			//root = treeData;
+			//	treeData.children.forEach(function(child) {
+			//		collapse(child);
+			//	});
+
+			render(treeData, treeData);
+		};
+	</script>
+	<body>
+	</body>
+	</html>
