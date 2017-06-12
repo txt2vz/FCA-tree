@@ -99,13 +99,12 @@
 			var tree = d3.layout.treelist().childIndent(20).nodeHeight(70);
 			var ul = d3.select("#tree-container").append("ul").classed(
 					"treelist", "true");
-			console.log("passed ul ");
+
 			d3.selectAll("li").remove();
 
 			if (treeData.children)
 				treeData.children.forEach(function(child) {
 					collapse(child);
-					console.log("collapse");
 				});
 
 			// Helper functions for collapsing and expanding nodes.
@@ -150,7 +149,9 @@
 									render(treeData, d);
 
 								}).on("mouseover", function(d) {
-							d3.select(this).classed("selected", true);
+							if (d.children || d._children) {
+								d3.select(this).classed("selected", true);
+							}
 						}).on(
 								"mouseout",
 								function(d) {
@@ -195,15 +196,17 @@
 									if (d._children)
 										objString = d.objects.sort().toString();
 									else
-										objString = d.own_objects.sort().toString();
+										objString = d.own_objects.sort()
+												.toString();
 
-									var maxStringLength = 150;							
+									var maxStringLength = 150;
 
 									if (d.attributes.toString())
 										attrString = d.attributes.toString();
 
 									if (objString.length > maxStringLength)
-										objString = objString.substring(0, maxStringLength)
+										objString = objString.substring(0,
+												maxStringLength)
 												+ '...';
 									if (attrString.length > maxStringLength)
 										attrString = attrString.substring(0,
