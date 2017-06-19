@@ -57,15 +57,15 @@
 
 1. Select display type:
 <select id="treeType">
-	<option value="list">expandable list view</option>
+	<option value="list">expandable list</option>
 	<option value="dendrogram">dendrogram</option>
 </select>
-&nbsp; &nbsp; &nbsp; &nbsp; Dendrogram options: Attributes
-<input type="checkbox" id="attributes" name="attributes">
-&nbsp; &nbsp; Objects:
-<input type="checkbox" id="objects" name="objects">
-&nbsp; Object Count:
-<input type="checkbox" id="objectCount" name="objectCount">
+<span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Dendrogram
+	options: Attributes <input type="checkbox" id="attributes"
+	name="attributes"> &nbsp; &nbsp; Objects: <input
+	type="checkbox" id="objects" name="objects"> &nbsp; Object
+	Count: <input type="checkbox" id="objectCount" name="objectCount">
+</span>
 
 <div>
 	2. Select a valid JSON file and upload/draw: <input type="file"
@@ -82,6 +82,18 @@
 <script type="text/javascript" src="js/drawFileTree.js"></script>
 
 <script>
+	$(document).ready(function() {
+		$("#dendoptions").hide();	
+		
+		$("select#treeType").on('change', function() {
+	
+		  if (	$("#treeType").val() == "list" )
+            $("#dendoptions").hide();
+		  else 
+		    $("#dendoptions").show();
+		});
+	});
+
 	var fileInput = $('#files');
 	var uploadButton = $('#upload');
 
@@ -97,12 +109,12 @@
 			var textFile = input.files[0];
 			reader.readAsText(textFile);
 
-			console.log("text file " + textFile);
-
-			if ($("#treeType").val() == "list")
-				$(reader).on('load', drawFileTree);
-			else
-				$(reader).on('load', drawDendrogram);
+			if ($("#treeType").val() == "list") {
+				 $(reader).on('load', drawFileTree);
+			}
+			else {
+				 $(reader).on('load', drawDendrogram);
+			}
 		} else {
 			alert('Please select a valid json file before continuing')
 		}
