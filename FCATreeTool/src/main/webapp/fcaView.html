@@ -83,14 +83,15 @@
 
 <script>
 	$(document).ready(function() {
-		$("#dendoptions").hide();	
-		
+		$("#dendoptions").hide();
+
 		$("select#treeType").on('change', function() {
-	
-		  if (	$("#treeType").val() == "list" )
-            $("#dendoptions").hide();
-		  else 
-		    $("#dendoptions").show();
+
+			if ($("#treeType").val() == "list") {
+				$("#dendoptions").hide();
+			} else {
+				$("#dendoptions").show();
+			}
 		});
 	});
 
@@ -110,10 +111,9 @@
 			reader.readAsText(textFile);
 
 			if ($("#treeType").val() == "list") {
-				 $(reader).on('load', drawFileTree);
-			}
-			else {
-				 $(reader).on('load', drawDendrogram);
+				$(reader).on('load', drawFileTree);
+			} else {
+				$(reader).on('load', drawDendrogram);
 			}
 		} else {
 			alert('Please select a valid json file before continuing')
