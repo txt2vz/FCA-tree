@@ -235,7 +235,7 @@ function drawVerticalDendrogram(e) {
 
 						});
 
-				if (document.getElementById('attributes').checked)
+	/*			if (document.getElementById('attributes').checked)
 					node.append("text").attr("transform", "translate(15, 0)")
 							.text(function(d) {
 								return d.attributes
@@ -256,7 +256,7 @@ function drawVerticalDendrogram(e) {
 							.text(function(d) {
 								return d.ObjectCount
 							});
-
+*/
 				// Transition nodes to their new position.
 				//switch x and y for vertical
 				var nodeUpdate = node.transition().duration(duration).attr(
