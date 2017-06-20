@@ -2,8 +2,7 @@ function drawDendrogram(e) {
 
 	// $("#tree-container").height(); //$(document).height();
 	console.log("in drawDendrongram");
-	d3.selectAll("li").remove();
-	
+	d3.selectAll("li").remove();	
 	d3.select("svg").remove();
 	var jsonFile = e.target.result;
 	var treeData = JSON.parse(jsonFile);
@@ -194,7 +193,8 @@ function drawDendrogram(e) {
 
 		// Enter any new nodes at the parent's previous position.
 		var nodeEnter = node.enter().append("g")
-		// .call(dragListener)
+		// .call(dragListener)		
+		
 		.attr("class", "node").attr("transform", function(d) {
 			return "translate(" + source.y0 + "," + source.x0 + ")";
 		}).on('click', click);

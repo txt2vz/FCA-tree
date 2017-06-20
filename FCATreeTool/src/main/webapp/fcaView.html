@@ -28,6 +28,13 @@
 	color: orange;
 }
 
+.hint2 {
+	float: right;
+	color: blue;
+	margin-right: 80px;
+	font-style: oblique;
+}
+
 .node {
 	cursor: pointer;
 	position: absolute;
@@ -59,6 +66,7 @@
 <select id="treeType">
 	<option value="list">expandable list</option>
 	<option value="dendrogram">dendrogram</option>
+	<option value="verticalDendrogram">vertical dendrogram</option>
 </select>
 <span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Dendrogram
 	options: Attributes <input type="checkbox" id="attributes"
@@ -68,9 +76,11 @@
 </span>
 
 <div>
-	2. Select a valid JSON file and upload/draw: <input type="file"
-		id="files" />
-	<button id="upload">Upload->Draw Tree</button>
+	<span> 2. Select a valid JSON file and upload/draw: <input
+		type="file" id="files" />
+		<button id="upload">Upload->Draw Tree</button>
+	</span> <span class="hint2"> mouse over node to see attribute and
+		object information </span>
 </div>
 
 <div id="tree-container"></div>
@@ -79,18 +89,27 @@
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="js/treelist.js"></script>
 <script type="text/javascript" src="js/drawDendrogram.js"></script>
+<script type="text/javascript" src="js/drawVerticalDendrogram.js"></script>
 <script type="text/javascript" src="js/drawFileTree.js"></script>
 
 <script>
 	$(document).ready(function() {
 		$("#dendoptions").hide();
+		$(".hint2").hide();
 
 		$("select#treeType").on('change', function() {
 
-			if ($("#treeType").val() == "list") {
-				$("#dendoptions").hide();
-			} else {
+			if ($("#treeType").val() == "dendrogram") {
 				$("#dendoptions").show();
+			} else {
+				$("#dendoptions").hide();
+			}
+			;
+
+			if ($("#treeType").val() == "verticalDendrogram") {
+				$(".hint2").show();
+			} else {
+				$(".hint2").hide();
 			}
 		});
 	});
@@ -112,6 +131,9 @@
 
 			if ($("#treeType").val() == "list") {
 				$(reader).on('load', drawFileTree);
+			} else if ($("#treeType").val() == "verticalDendrogram") {
+				$(reader).on('load', drawVerticalDendrogram);
+
 			} else {
 				$(reader).on('load', drawDendrogram);
 			}
