@@ -30,6 +30,11 @@ function drawVerticalDendrogram(e) {
 			var diagonal = d3.svg.diagonal().projection(function(d) {
 				return [ d.x, d.y ];
 			});
+			
+			if (treeData.children)
+				treeData.children.forEach(function(child) {
+					collapse(child);
+				});
 
 			// TODO: Pan function, can be better implemented.
 			function pan(domNode, direction) {
@@ -145,13 +150,13 @@ function drawVerticalDendrogram(e) {
 
 				//collapse all children so click will only open one level.
 				//not applied initially if fully expanded selected
-				if (oneLevel) {
-					if (source.children)
-						source.children.forEach(function(child) {
-							collapse(child);
-						});
-				}
-				oneLevel = true;
+			//	if (oneLevel) {
+			//		if (source.children)
+			//			source.children.forEach(function(child) {
+			//				collapse(child);
+			//			});
+			//	}
+			//	oneLevel = true;
 
 				console.log("in update");
 				// Compute the new height, function counts total children of root node and sets tree height accordingly.
@@ -349,10 +354,10 @@ function drawVerticalDendrogram(e) {
 			console.log("oneLevel: " + oneLevel);
 
 			// Collapse all children of roots children before rendering.
-			if (oneLevel)
-				root.children.forEach(function(child) {
-					collapse(child);
-				});
+		//	if (oneLevel)
+			//	root.children.forEach(function(child) {
+				//	collapse(child);
+			//	});
 
 			// Layout the tree initially and center on the root node.
 			update(root);

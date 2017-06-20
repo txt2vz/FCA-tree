@@ -16,10 +16,11 @@ function drawDendrogram(e) {
 	var panBoundary = 20; // Within 20px from edges will pan when dragging.
 	// Misc. variables
 	var i = 0;
-	var duration = 750;
+	var duration = 400;
 	var root;
 	var oneLevel = true;// $('input[name=type]:checked', '#expanded').val() ==
-						// "oneLevel";
+	// "oneLevel";
+	var vertical = false;
 
 	// size of the diagram
 	var viewerWidth = $(document).width();
@@ -29,7 +30,10 @@ function drawDendrogram(e) {
 
 	// define a d3 diagonal projection for use by the node paths later on.
 	var diagonal = d3.svg.diagonal().projection(function(d) {
-		return [ d.y, d.x ];
+		if (vertical)
+			return [ d.x, d.y ];
+		else
+			return [ d.y, d.x ];
 	});
 
 	if (treeData.children)
@@ -205,7 +209,21 @@ function drawDendrogram(e) {
 		// .call(dragListener)
 
 		.attr("class", "node").attr("transform", function(d) {
-			return "translate(" + source.y0 + "," + source.x0 + ")";
+
+			var a, b;
+
+			if (vertical) {
+				a = source.x0;
+				b = source.y0;
+			} else {
+				a = source.y0;
+				y = source.x0;
+			}
+			;
+
+			return "translate(" + a + "," + b + ")";
+
+			// return "translate(" + source.y0 + "," + source.x0 + ")";
 		}).on('click', click);
 
 		nodeEnter.append("circle").attr('class', 'nodeCircle').attr("r", 0)
@@ -250,7 +268,11 @@ function drawDendrogram(e) {
 		// Transition nodes to their new position.
 		var nodeUpdate = node.transition().duration(duration).attr("transform",
 				function(d) {
-					return "translate(" + d.y + "," + d.x + ")";
+					if (vertical)
+						return "translate(" + d.x + "," + d.y + ")";
+					else
+
+						return "translate(" + d.y + "," + d.x + ")";
 				});
 
 		nodeUpdate.select("circle").attr("r", 15).style("fill", function(d) {
