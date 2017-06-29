@@ -223,9 +223,25 @@ function drawVerticalDendrogram(e) {
 							var max = 200;
 							var returnString = "";
 							var objString = "empty";
-							var attrString = "empty";
-							if (d.objects.toString())
+							var attrString = "empty";					
+					
+							console.log("Node " + d.Node);
+							console.log("owwwwn objs " + d.own_objects);
+							console.log("objects " + d.objects);
+							
+							if (d._children){
+							
+								console.log(d.Node + "d._children is trueNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
 								objString = d.objects.toString();
+							//	console.log("obj string d._ " + objString);
+							} else
+								{
+								objString = d.own_objects.toString();
+								console.log(d.Node + "d._children is false ZXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+							//	console.log("OWN obj string " + objString);
+								};
+							
+							
 							if (d.attributes.toString())
 								attrString = d.attributes.toString();
 
@@ -236,6 +252,7 @@ function drawVerticalDendrogram(e) {
 
 							return "Objects:    " + "<br />" + objString + "<br /> <br />"
 									+ "Attributes: " + "<br />" + attrString  + "<br /> <br />"
+									+ "Own Objects: " + d.own_objects + "<br />"
 									+ "Object Count: " + d.ObjectCount;
 
 						});

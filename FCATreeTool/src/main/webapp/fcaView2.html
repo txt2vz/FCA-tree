@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+.overlay {
+	background-color: #FFF;
+}
+
+.node circle {
+	fill: #fff;
+	stroke: steelblue;
+	stroke-width: 1.5px;
+}
+
+.node text {
+	font-size: 10px;
+	font-family: sans-serif;
+}
+
+.link {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 1.5px;
+}
+
+.selected {
+	color: orange;
+}
+
+.hint {
+	float: right;
+	color: blue;
+	margin-right: 80px;
+	font-style: oblique;
+}
+
+.node {
+	cursor: pointer;
+	position: absolute;
+	list-style: none;
+	font-size: 14px;
+}
+
+.node span {
+	margin-right: 3px;
+}
+</style>
+
+<link
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+	rel="stylesheet">
+
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+
+<title>FCA Tree Tool</title>
+</head>
+
+<h1>FCA Tree Tool</h1>
+
+1. Select display type:
+<select id="treeType">
+	<option value="list">expandable list</option>
+	<option value="dendrogram">dendrogram</option>
+	<option value="verticalDendrogram">vertical dendrogram</option>
+</select>
+<span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Dendrogram
+	options: Attributes <input type="checkbox" id="attributes"
+	name="attributes"> &nbsp; &nbsp; Objects: <input
+	type="checkbox" id="objects" name="objects"> &nbsp; Object
+	Count: <input type="checkbox" id="objectCount" name="objectCount">
+</span>
+	<span class="hint" id="dendHint"> Mouse wheel to zoom.  Hold click and move mouse to move tree </span>
+
+<div>
+	<span> 2. Select a valid JSON file and upload/draw: <input
+		type="file" id="files" />
+		<button id="upload">Upload->Draw Tree</button>
+	</span> 
+	<span class="hint" id = "verticalHint"> Mouse over node to see attribute and
+		object information </span>
+</div>
+
+<div id="tree-container"></div>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="js/treelist.js"></script>
+<script type="text/javascript" src="js/drawDendrogramIntegrate.js"></script>
+
+<script type="text/javascript" src="js/drawFileTree.js"></script>
+
+<script>
+	$(document).ready(function() {
+		$("#dendoptions").hide();
+		$("#dendHint").hide();
+		$("#verticalHint").hide();
+
+		$("select#treeType").on('change', function() {
+
+			if ($("#treeType").val() == "dendrogram") {
+				$("#dendoptions").show();
+			} else {
+				$("#dendoptions").hide();
+			};
+
+			if ($("#treeType").val() == "list") {
+				$("#dendHint").hide();
+			} else {
+				$("#dendHint").show();
+			};
+			
+			if ($("#treeType").val() == "verticalDendrogram") {
+				$("#verticalHint").show();
+			} else {
+				$("#verticalHint").hide();
+			};
+		});
+	});
+
+	var fileInput = $('#files');
+	var uploadButton = $('#upload');
+
+	uploadButton.on('click', function() {
+		if (!window.FileReader) {
+			alert('Your browser is not supported')
+		}
+		var input = fileInput.get(0);
+
+		// Create a reader object
+		var reader = new FileReader();
+		if (input.files.length) {
+			var textFile = input.files[0];
+			reader.readAsText(textFile);
+
+			if ($("#treeType").val() == "list") {
+				$(reader).on('load', drawFileTree);
+			} else if ($("#treeType").val() == "verticalDendrogram") {
+				$(reader).on('load', drawVerticalDendrogram);
+
+			} else {
+				$(reader).on('load', drawDendrogram);
+			}
+		} else {
+			alert('Please select a valid json file before continuing')
+		}
+	});
+</script>
+
+</body>
+</html>

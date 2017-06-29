@@ -23,7 +23,7 @@ function drawFileTree(e) {
 	var viewerWidth = $(document).width();
 	var viewerHeight = $(document).height();
 
-	var tree = d3.layout.treelist().childIndent(20).nodeHeight(70);
+	var tree = d3.layout.treelist().childIndent(20).nodeHeight(50);
 	var ul = d3.select("#tree-container").append("ul").classed("treelist",
 			true);
 
@@ -131,16 +131,26 @@ function drawFileTree(e) {
 								attrString = attrString.substring(0,
 										maxStringLength)
 										+ '...';
+							
+							var x = false;
+							
+							if (x){
+								attrString =  "<span style=color:green> Attributes: "
+								+ attrString
+								+ "</span><br /> " ;								
+							} 
+							else {attrString = "zz3"};
 
 							return "<strong> Node: "
 									+ d.Node
 									+ "</strong><br /> <span style=color:blue>Objects: "
 									+ objString
 									+ "</span> <br />"
-									+ "<span style=color:green> Attributes: "
+								//	+ "<span style=color:green> Attributes: "
 									+ attrString
-									+ "</span>"
-									+ "<br/> <span style=color:DarkSlateBlue> obj count "
+								//	+ "</span>"
+								//	+ "<br/> " +
+									+		"<span style=color:DarkSlateBlue> obj count "
 									+ d.ObjectCount + "</span>";
 						})
 
