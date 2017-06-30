@@ -67,8 +67,8 @@
 	<option value="dendrogram">dendrogram</option>
 	<option value="verticalDendrogram">vertical dendrogram</option>
 </select>
-<span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; 
-	Options: Attributes <input type="checkbox" id="attributes"
+<span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Dendrogram
+	options: Attributes <input type="checkbox" id="attributes"
 	name="attributes"> &nbsp; &nbsp; Objects: <input
 	type="checkbox" id="objects" name="objects"> &nbsp; Object
 	Count: <input type="checkbox" id="objectCount" name="objectCount">
@@ -89,22 +89,22 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="js/treelist.js"></script>
-<script type="text/javascript" src="js/drawDendrogram.js"></script>
-<script type="text/javascript" src="js/drawVerticalDendrogram.js"></script>
+<script type="text/javascript" src="js/drawDendrogramIntegrate.js"></script>
+
 <script type="text/javascript" src="js/drawFileTree.js"></script>
 
 <script>
 	$(document).ready(function() {
-		$("#dendoptions").show();
+		$("#dendoptions").hide();
 		$("#dendHint").hide();
 		$("#verticalHint").hide();
 
 		$("select#treeType").on('change', function() {
 
-			if ($("#treeType").val() == "verticalDendrogram") {
-				$("#dendoptions").hide();
-			} else {
+			if ($("#treeType").val() == "dendrogram") {
 				$("#dendoptions").show();
+			} else {
+				$("#dendoptions").hide();
 			};
 
 			if ($("#treeType").val() == "list") {
@@ -139,10 +139,10 @@
 			if ($("#treeType").val() == "list") {
 				$(reader).on('load', drawFileTree);
 			} else if ($("#treeType").val() == "verticalDendrogram") {
-				$(reader).on('load', drawVerticalDendrogram);
+				$(reader).on('load', drawDendrogramI);
 
 			} else {
-				$(reader).on('load', drawDendrogram);
+				$(reader).on('load', drawDendrogramI);
 			}
 		} else {
 			alert('Please select a valid json file before continuing')

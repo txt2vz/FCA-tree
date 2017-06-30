@@ -233,7 +233,7 @@ function drawVerticalDendrogram(e) {
 
 					return "Objects:    " + "<br />" + objString
 							+ "<br /> <br />" + "Attributes: " + "<br />"
-							+ attrString + "<br /> <br />" + "Own Objects: "					
+							+ attrString + "<br /> <br />" + "Object count: "					
 							+ d.ObjectCount;
 
 				});

@@ -3,7 +3,7 @@ function drawFileTree(e) {
 	// $("#tree-container").height(); //$(document).height();
 	console.log("in drawDendrongram");
 	d3.select("svg").remove();
-	
+
 	var jsonFile = e.target.result;
 	var treeData = JSON.parse(jsonFile);
 
@@ -22,10 +22,18 @@ function drawFileTree(e) {
 	// size of the diagram
 	var viewerWidth = $(document).width();
 	var viewerHeight = $(document).height();
-
-	var tree = d3.layout.treelist().childIndent(20).nodeHeight(50);
-	var ul = d3.select("#tree-container").append("ul").classed("treelist",
-			true);
+	var nodeHeight = 15;
+	
+	if (document.getElementById('attributes').checked)
+		nodeHeight += 20;
+	if (document.getElementById('objects').checked)
+		nodeHeight += 20;
+	if (document.getElementById('objectCount').checked)
+		nodeHeight += 20;
+	
+	var tree = d3.layout.treelist().childIndent(20).nodeHeight(nodeHeight);
+	var ul = d3.select("#tree-container").append("ul")
+			.classed("treelist", true);
 
 	d3.selectAll("li").remove();
 
@@ -102,14 +110,7 @@ function drawFileTree(e) {
 				.select("span")
 				.html(
 						function(d) {
-							var sep = ", ";
-
-							// console.log(`own object ${d.own_objects}`);
-							// var objString = d.children ? "ownObj "
-							// + d.own_objects.join(sep) : "allObj "
-							// + d.objects.join(sep);
-
-							// var attrString = d.attributes.join(sep);
+			
 							var objString = "empty";
 							var attrString = "empty";
 
@@ -131,27 +132,31 @@ function drawFileTree(e) {
 								attrString = attrString.substring(0,
 										maxStringLength)
 										+ '...';
-							
-							var x = false;
-							
-							if (x){
-								attrString =  "<span style=color:green> Attributes: "
-								+ attrString
-								+ "</span><br /> " ;								
-							} 
-							else {attrString = "zz3"};
 
-							return "<strong> Node: "
-									+ d.Node
-									+ "</strong><br /> <span style=color:blue>Objects: "
-									+ objString
-									+ "</span> <br />"
-								//	+ "<span style=color:green> Attributes: "
-									+ attrString
-								//	+ "</span>"
-								//	+ "<br/> " +
-									+		"<span style=color:DarkSlateBlue> obj count "
-									+ d.ObjectCount + "</span>";
+							if (document.getElementById('attributes').checked) {
+								attrString = "<span style=color:green> Attributes: "
+										+ attrString + "</span><br /> ";
+							}
+							else attrString = "";
+
+							if (document.getElementById('objects').checked) {
+								objString = "<span style=color:blue> Objects: "
+										+ objString + "</span><br /> ";
+							}
+							else objString="";
+
+							var countString = "empty";
+
+							if (document.getElementById('objectCount').checked) {
+								countString = "<span style=color:DarkSlateBlue> Object count: "
+										+ d.ObjectCount + "</span><br /> ";
+							}
+							else countString="";
+
+							return "<strong> Node: " + d.Node + "</strong><br/>"
+									+ objString								
+									+ attrString 
+									+ countString;
 						})
 
 		// update position with transition
