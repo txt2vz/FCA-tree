@@ -1,4 +1,4 @@
-function drawDendrogram(e) {
+function drawDendrogramI(e) {
 
 	// $("#tree-container").height(); //$(document).height();
 	console.log("in drawDendrongram");
@@ -218,8 +218,7 @@ function drawDendrogram(e) {
 			} else {
 				a = source.y0;
 				y = source.x0;
-			}
-			;
+			};
 
 			return "translate(" + a + "," + b + ")";
 

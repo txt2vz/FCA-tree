@@ -139,10 +139,10 @@
 			if ($("#treeType").val() == "list") {
 				$(reader).on('load', drawFileTree);
 			} else if ($("#treeType").val() == "verticalDendrogram") {
-				$(reader).on('load', drawVerticalDendrogram);
+				$(reader).on('load', drawDendrogramI);
 
 			} else {
-				$(reader).on('load', drawDendrogram);
+				$(reader).on('load', drawDendrogramI);
 			}
 		} else {
 			alert('Please select a valid json file before continuing')
