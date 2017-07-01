@@ -152,8 +152,16 @@ function drawFileTree(e) {
 										+ d.ObjectCount + "</span><br /> ";
 							}
 							else countString="";
-
-							return "<strong> Node: " + d.Node + "</strong><br/>"
+							
+							var nodeString ="";
+							if (d._children ||d.children){
+								nodeString = "&nbsp;Node: " + d.Node;
+								
+							} else	{	
+								nodeString = "&nbsp;&nbsp;Node: " + d.Node;
+							}; 								
+							
+							return "<strong>" + nodeString + "</strong><br/>"
 									+ objString								
 									+ attrString 
 									+ countString;
