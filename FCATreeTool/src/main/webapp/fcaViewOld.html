@@ -67,8 +67,8 @@
 	<option value="dendrogram">dendrogram</option>
 	<option value="verticalDendrogram">vertical dendrogram</option>
 </select>
-<span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; 
-	Options: Attributes <input type="checkbox" id="attributes"
+<span id="dendoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Dendrogram
+	options: Attributes <input type="checkbox" id="attributes"
 	name="attributes"> &nbsp; &nbsp; Objects: <input
 	type="checkbox" id="objects" name="objects"> &nbsp; Object
 	Count: <input type="checkbox" id="objectCount" name="objectCount">
@@ -95,16 +95,16 @@
 
 <script>
 	$(document).ready(function() {
-		$("#dendoptions").show();
+		$("#dendoptions").hide();
 		$("#dendHint").hide();
 		$("#verticalHint").hide();
 
 		$("select#treeType").on('change', function() {
 
-			if ($("#treeType").val() == "verticalDendrogram") {
-				$("#dendoptions").hide();
-			} else {
+			if ($("#treeType").val() == "dendrogram") {
 				$("#dendoptions").show();
+			} else {
+				$("#dendoptions").hide();
 			};
 
 			if ($("#treeType").val() == "list") {

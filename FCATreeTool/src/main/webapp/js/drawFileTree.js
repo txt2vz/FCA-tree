@@ -23,14 +23,14 @@ function drawFileTree(e) {
 	var viewerWidth = $(document).width();
 	var viewerHeight = $(document).height();
 	var nodeHeight = 15;
-	
+
 	if (document.getElementById('attributes').checked)
 		nodeHeight += 20;
 	if (document.getElementById('objects').checked)
 		nodeHeight += 20;
 	if (document.getElementById('objectCount').checked)
 		nodeHeight += 20;
-	
+
 	var tree = d3.layout.treelist().childIndent(20).nodeHeight(nodeHeight);
 	var ul = d3.select("#tree-container").append("ul")
 			.classed("treelist", true);
@@ -110,7 +110,7 @@ function drawFileTree(e) {
 				.select("span")
 				.html(
 						function(d) {
-			
+
 							var objString = "empty";
 							var attrString = "empty";
 
@@ -136,34 +136,35 @@ function drawFileTree(e) {
 							if (document.getElementById('attributes').checked) {
 								attrString = "<span style=color:green> Attributes: "
 										+ attrString + "</span><br /> ";
-							}
-							else attrString = "";
+							} else
+								attrString = "";
 
 							if (document.getElementById('objects').checked) {
 								objString = "<span style=color:blue> Objects: "
 										+ objString + "</span><br /> ";
-							}
-							else objString="";
+							} else
+								objString = "";
 
 							var countString = "empty";
 
 							if (document.getElementById('objectCount').checked) {
 								countString = "<span style=color:DarkSlateBlue> Object count: "
 										+ d.ObjectCount + "</span><br /> ";
-							}
-							else countString="";
-							
-							var nodeString ="";
-							if (d._children ||d.children){
+							} else
+								countString = "";
+
+							var nodeString = "";
+							if (d._children || d.children) {
 								nodeString = "&nbsp;Node: " + d.Node;
-								
-							} else	{	
-								nodeString = "&nbsp;&nbsp;Node: " + d.Node;
-							}; 								
-							
+
+							} else {
+								nodeString = "Node: " + d.Node;
+							}
+							;
+
 							return "<strong>" + nodeString + "</strong><br/>"
-									+ objString								
 									+ attrString 
+									+ objString 
 									+ countString;
 						})
 

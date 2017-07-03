@@ -210,33 +210,37 @@ function drawVerticalDendrogram(e) {
 				});
 
 		node.selectAll("title").remove();
-		node.append("svg:title").html(
-				function(d) {
-					var max = 200;
-					var returnString = "";
-					var objString = "empty";
-					var attrString = "empty";
+		node
+				.append("svg:title")
+				.html(
+						function(d) {
+							var max = 200;
+							var returnString = "";
+							var objString = "empty";
+							var attrString = "empty";
 
-					if (d._children) {
-						objString = d.objects.toString();
-					} else {
-						objString = d.own_objects.toString();
-					};
+							if (d._children) {
+								objString = d.objects.toString();
+							} else {
+								objString = d.own_objects.toString();
+							};
 
-					if (d.attributes.toString())
-						attrString = d.attributes.toString();
+							if (objString.length > max)
+								objString = objString.substring(0, max) + '...';
+							if (attrString.length > max)
+								attrString = attrString.substring(0, max)
+										+ '...';
 
-					if (objString.length > max)
-						objString = objString.substring(0, max) + '...';
-					if (attrString.length > max)
-						attrString = attrString.substring(0, max) + '...';
+							objString = "Objects: <br />" + objString
+									+ "<br /> <br />";
 
-					return "Objects:    " + "<br />" + objString
-							+ "<br /> <br />" + "Attributes: " + "<br />"
-							+ attrString + "<br /> <br />" + "Object count: "					
-							+ d.ObjectCount;
+							if (d.attributes.toString())
+								attrString = "Attributes: <br />"
+										+ d.attributes.toString()
+										+ "<br /> <br />";
 
-				});
+							return attrString + objString + "Object Count: " + d.ObjectCount;
+						});
 
 		// Transition nodes to their new position.
 		// switch x and y for vertical
