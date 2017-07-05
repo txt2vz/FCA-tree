@@ -214,7 +214,7 @@ function drawVerticalDendrogram(e) {
 				.append("svg:title")
 				.html(
 						function(d) {
-							var max = 200;
+							var max = 800;
 							var returnString = "";
 							var objString = "empty";
 							var attrString = "empty";

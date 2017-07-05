@@ -22,7 +22,7 @@ function drawDendrogram(e) {
 						// "oneLevel";
 
 	// size of the diagram
-	var viewerWidth = $(document).width();
+	var viewerWidth = 10000;//$(document).width();
 	var viewerHeight = $(document).height();
 
 	var tree = d3.layout.tree().size([ viewerHeight, viewerWidth ]);

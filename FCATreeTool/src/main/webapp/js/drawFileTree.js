@@ -20,7 +20,7 @@ function drawFileTree(e) {
 	var root;
 
 	// size of the diagram
-	var viewerWidth = $(document).width();
+	var viewerWidth = 10000;//$(document).width();
 	var viewerHeight = $(document).height();
 	var nodeHeight = 15;
 
@@ -124,10 +124,10 @@ function drawFileTree(e) {
 							if (d.attributes.toString())
 								attrString = d.attributes.toString();
 
-							if (objString.length > maxStringLength)
-								objString = objString.substring(0,
-										maxStringLength)
-										+ '...';
+					//		if (objString.length > maxStringLength)
+						//		objString = objString.substring(0,
+							//			maxStringLength)
+								//		+ '...';
 							if (attrString.length > maxStringLength)
 								attrString = attrString.substring(0,
 										maxStringLength)
