@@ -75,7 +75,7 @@
 		<option value="dendrogram">dendrogram</option>
 		<option value="verticalDendrogram">vertical dendrogram</option>
 	</select>
-	<span id="viewoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Options:
+	<span id="viewoptions"> &nbsp; &nbsp; &nbsp; &nbsp; Options (change forces refresh):
 		Attributes <input type="checkbox" id="attributes" name="attributes">
 		&nbsp; &nbsp; Objects: <input type="checkbox" id="objects"
 		name="objects"> &nbsp; Object Count: <input type="checkbox"
@@ -95,10 +95,14 @@
 	<div id="tree-container"></div>
 
 	<script>
+	
+	
 		$(document).ready(function() {
 			$("#viewoptions").show();
 			$("#dendHint").hide();
 			$("#verticalHint").hide();
+			
+			$('#objects').val(this.checked);
 
 			$("select#treeType").on('change', function() {
 
@@ -120,23 +124,27 @@
 					$("#verticalHint").show();
 				} else {
 					$("#verticalHint").hide();
-				}
-				;
-				//reload();
+				};
+			
 			});
 			
-			$("#viewoptions").on('change', reload()); 			
+			 $(':checkbox').change(function(){					 
+					 reload(false); 		
+			 });
 			
 		});
 
 		var fileInput = $('#files');
 		var uploadButton = $('#upload');
 
-		function reload(){
+		function reload(opt){
+			
+			var input;
+			console.log("in reload opt" + opt);
 			if (!window.FileReader) {
 				alert('Your browser is not supported')
 			}
-			var input = fileInput.get(0);
+			 input = fileInput.get(0);
 
 			// Create a reader object
 			var reader = new FileReader();
@@ -152,11 +160,10 @@
 				} else {
 					$(reader).on('load', drawDendrogram);
 				}
-			} else {
+			} else { if (opt)
 				alert('Please select a valid json file before continuing')
 			}
-		};
-	
+		};	
 		
 		uploadButton.on('click', reload);
 	</script>
