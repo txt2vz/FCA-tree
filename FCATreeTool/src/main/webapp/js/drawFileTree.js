@@ -111,8 +111,8 @@ function drawFileTree(e) {
 				.html(
 						function(d) {
 
-							var objString = "empty";
-							var attrString = "empty";
+							var objString = "";
+							var attrString = "";
 
 							if (d._children)
 								objString = d.objects.sort().toString();
@@ -124,13 +124,13 @@ function drawFileTree(e) {
 							if (d.attributes.toString())
 								attrString = d.attributes.toString();
 
-					//		if (objString.length > maxStringLength)
-						//		objString = objString.substring(0,
-							//			maxStringLength)
-								//		+ '...';
-							if (attrString.length > maxStringLength)
-								attrString = attrString.substring(0,
-										maxStringLength)
+//							if (objString.length > maxStringLength)
+//								objString = objString.substring(0,
+//										maxStringLength)
+//										+ '...';
+//							if (attrString.length > maxStringLength)
+//								attrString = attrString.substring(0,
+//										maxStringLength)
 										+ '...';
 
 							if (document.getElementById('attributes').checked) {

@@ -6,10 +6,8 @@ apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.p
 repositories { mavenCentral() }
 
 dependencies {
-	// compile 'org.codehaus.groovy:groovy-all:2.3.6'  //for gradle 2.5
-	//	compile 'org.codehaus.groovy:groovy-all:2.4.4'   //will confilict with jetty plugin - use 2.3.10 for gradle 2.6
 
-	compile	'org.codehaus.groovy:groovy-all:2.3.10'
+	 compile 'org.codehaus.groovy:groovy-all:2.4.12'
 
 	testCompile 'junit:junit:4.11'
 }
