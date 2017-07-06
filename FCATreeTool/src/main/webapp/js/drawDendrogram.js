@@ -19,10 +19,10 @@ function drawDendrogram(e) {
 	var duration = 750;
 	var root;
 	var oneLevel = true;// $('input[name=type]:checked', '#expanded').val() ==
-						// "oneLevel";
+	// "oneLevel";
 
 	// size of the diagram
-	var viewerWidth = 10000;//$(document).width();
+	var viewerWidth = 10000;// $(document).width();
 	var viewerHeight = $(document).height();
 
 	var tree = d3.layout.tree().size([ viewerHeight, viewerWidth ]);
@@ -222,39 +222,36 @@ function drawDendrogram(e) {
 				});
 
 		node.selectAll("title").remove();
-		node
-				.append("svg:title")
-				.html(
-						function(d) {
-							var max = 800;
-							//var returnString = "";
-							var objString = "";
-							var attrString = "";
+		node.append("svg:title").html(
+				function(d) {
+					var max = 800;
+					// var returnString = "";
+					var objString = "";
+					var attrString = "";
 
-							if (d._children) {
-								objString = d.objects.toString();
-							} else {
-								objString = d.own_objects.toString();
-							};
+					if (d._children) {
+						objString = d.objects.toString();
+					} else {
+						objString = d.own_objects.toString();
+					}
+					;
 
-							if (objString.length > max)
-								objString = objString.substring(0, max) + '...';
-							if (attrString.length > max)
-								attrString = attrString.substring(0, max)
-										+ '...';
+					if (objString.length > max)
+						objString = objString.substring(0, max) + '...';
+					if (attrString.length > max)
+						attrString = attrString.substring(0, max) + '...';
 
-							objString = "Objects:&nbsp;" + objString
-									+ "<br /> <br />";
+					objString = "Objects:&nbsp;" + objString + "<br /> <br />";
 
-							if (d.attributes.toString())
-								attrString = "Attributes: "
-										+ d.attributes.toString()
-										+ "<br /> <br />";
+					if (d.attributes.toString())
+						attrString = "Attributes: " + d.attributes.toString()
+								+ "<br /> <br />";
 
-							return attrString + objString + "Object Count: " + d.ObjectCount;
-						});
+					return attrString + objString + "Object Count: "
+							+ d.ObjectCount;
+				});
 
-/*		if (document.getElementById('attributes').checked)
+		if (document.getElementById('attributes').checked)
 			node.append("text").attr("transform", "translate(15, 0)").text(
 					function(d) {
 						return d.attributes
@@ -275,7 +272,7 @@ function drawDendrogram(e) {
 					function(d) {
 						return d.ObjectCount
 					});
-*/
+
 		// Transition nodes to their new position.
 		var nodeUpdate = node.transition().duration(duration).attr("transform",
 				function(d) {
