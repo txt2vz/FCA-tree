@@ -221,11 +221,40 @@ function drawDendrogram(e) {
 					return d.Node;
 				});
 
-		node.append("svg:title").text(function(d) {
-			return d.attributes;
-		});
+		node.selectAll("title").remove();
+		node
+				.append("svg:title")
+				.html(
+						function(d) {
+							var max = 800;
+							//var returnString = "";
+							var objString = "";
+							var attrString = "";
 
-		if (document.getElementById('attributes').checked)
+							if (d._children) {
+								objString = d.objects.toString();
+							} else {
+								objString = d.own_objects.toString();
+							};
+
+							if (objString.length > max)
+								objString = objString.substring(0, max) + '...';
+							if (attrString.length > max)
+								attrString = attrString.substring(0, max)
+										+ '...';
+
+							objString = "Objects:&nbsp;" + objString
+									+ "<br /> <br />";
+
+							if (d.attributes.toString())
+								attrString = "Attributes: "
+										+ d.attributes.toString()
+										+ "<br /> <br />";
+
+							return attrString + objString + "Object Count: " + d.ObjectCount;
+						});
+
+/*		if (document.getElementById('attributes').checked)
 			node.append("text").attr("transform", "translate(15, 0)").text(
 					function(d) {
 						return d.attributes
@@ -246,7 +275,7 @@ function drawDendrogram(e) {
 					function(d) {
 						return d.ObjectCount
 					});
-
+*/
 		// Transition nodes to their new position.
 		var nodeUpdate = node.transition().duration(duration).attr("transform",
 				function(d) {

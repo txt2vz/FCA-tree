@@ -45,6 +45,10 @@
 .node span {
 	margin-right: 3px;
 }
+
+span {
+    white-space: nowrap;
+}
 </style>
 
 <link
@@ -94,8 +98,7 @@
 
 	<div id="tree-container"></div>
 
-	<script>
-	
+	<script>	
 	
 		$(document).ready(function() {
 			$("#viewoptions").show();
@@ -106,25 +109,25 @@
 
 			$("select#treeType").on('change', function() {
 
-				if ($("#treeType").val() == "verticalDendrogram") {
-					$("#viewoptions").hide();
-				} else {
+				if ($("#treeType").val() == "list") {
 					$("#viewoptions").show();
+				} else {
+					$("#viewoptions").hide();
 				}
 				;
 
 				if ($("#treeType").val() == "list") {
-					$("#dendHint").hide();
+					$(".hint").hide();
 				} else {
-					$("#dendHint").show();
+					$(".hint").show();
 				}
 				;
 
-				if ($("#treeType").val() == "verticalDendrogram") {
-					$("#verticalHint").show();
-				} else {
-					$("#verticalHint").hide();
-				};
+			//	if ($("#treeType").val() == "verticalDendrogram") {
+			//		$("#verticalHint").show();
+			//	} else {
+			//		$("#verticalHint").hide();
+			//	};
 			
 			});
 			
@@ -137,10 +140,10 @@
 		var fileInput = $('#files');
 		var uploadButton = $('#upload');
 
-		function reload(opt){
+		function reload(upload){
 			
 			var input;
-			console.log("in reload opt" + opt);
+			console.log("in reload upload " + upload);
 			if (!window.FileReader) {
 				alert('Your browser is not supported')
 			}
@@ -160,7 +163,7 @@
 				} else {
 					$(reader).on('load', drawDendrogram);
 				}
-			} else { if (opt)
+			} else { if (upload)
 				alert('Please select a valid json file before continuing')
 			}
 		};	

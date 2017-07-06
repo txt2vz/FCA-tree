@@ -208,16 +208,17 @@ function drawVerticalDendrogram(e) {
 				.text(function(d) {
 					return d.Node;
 				});
-
+	
+		
 		node.selectAll("title").remove();
 		node
 				.append("svg:title")
 				.html(
 						function(d) {
 							var max = 800;
-							var returnString = "";
-							var objString = "empty";
-							var attrString = "empty";
+							//var returnString = "";
+							var objString = "";
+							var attrString = "";
 
 							if (d._children) {
 								objString = d.objects.toString();
@@ -231,11 +232,11 @@ function drawVerticalDendrogram(e) {
 								attrString = attrString.substring(0, max)
 										+ '...';
 
-							objString = "Objects: <br />" + objString
+							objString = "Objects:&nbsp;" + objString
 									+ "<br /> <br />";
 
 							if (d.attributes.toString())
-								attrString = "Attributes: <br />"
+								attrString = "Attributes: "
 										+ d.attributes.toString()
 										+ "<br /> <br />";
 

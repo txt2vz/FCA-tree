@@ -20,7 +20,7 @@ function drawFileTree(e) {
 	var root;
 
 	// size of the diagram
-	var viewerWidth = 10000;//$(document).width();
+	var viewerWidth = 40000;//$(document).width();
 	var viewerHeight = $(document).height();
 	var nodeHeight = 15;
 
@@ -132,15 +132,19 @@ function drawFileTree(e) {
 //								attrString = attrString.substring(0,
 //										maxStringLength)
 										+ '...';
-
+										
+							//attrString = attrString.replace(/ /g, "&nbsp;");
 							if (document.getElementById('attributes').checked) {
-								attrString = "<span style=color:green> Attributes: "
+								attrString = "<span style=color:green> <strong>Attributes:&nbsp;</strong>"
 										+ attrString + "</span><br /> ";
 							} else
 								attrString = "";
+							
+							//objString = objString.replace(/ /g, "&nbsp;");
+							//console.log("obje sgtting " + objString);
 
 							if (document.getElementById('objects').checked) {
-								objString = "<span style=color:blue> Objects: "
+								objString = "<span style=color:blue><strong>Objects:&nbsp;</strong>"
 										+ objString + "</span><br /> ";
 							} else
 								objString = "";
@@ -148,7 +152,7 @@ function drawFileTree(e) {
 							var countString = "empty";
 
 							if (document.getElementById('objectCount').checked) {
-								countString = "<span style=color:DarkSlateBlue> Object count: "
+								countString = "<span style=color:DarkSlateBlue><strong>Object count:&nbsp;</strong>"
 										+ d.ObjectCount + "</span><br /> ";
 							} else
 								countString = "";
