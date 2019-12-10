@@ -27,6 +27,7 @@ function drawDendrogram(e) {
 
 	var tree = d3.layout.tree().size([ viewerHeight, viewerWidth ]);
 
+
 	// define a d3 diagonal projection for use by the node paths later on.
 	var diagonal = d3.svg.diagonal().projection(function(d) {
 		return [ d.y, d.x ];
@@ -146,6 +147,18 @@ function drawDendrogram(e) {
 		// centerNode(d);
 	}
 
+	function getAllParentalAttributes(d){
+		if (d.parent) {
+			var s = getAllParentalAttributes(d.parent);
+			s = s + d.attributes.toString();
+			return s;
+		}
+		else
+		{
+			return d.attributes.toString();
+		}
+	}
+
 	function update(source) {
 
 		// var oneLevel = true;// $('input[name=type]:checked',
@@ -221,6 +234,7 @@ function drawDendrogram(e) {
 					return d.Node;
 				});
 
+
 		node.selectAll("title").remove();
 		node.append("svg:title").html(
 				function(d) {
@@ -242,9 +256,18 @@ function drawDendrogram(e) {
 						attrString = attrString.substring(0, max) + '...';
 
 					objString = "Objects:&nbsp;" + objString + "<br /> <br />";
+ 				     var xx = "";
 
+ 				     if (d.parent)
+						 xx= d.parent.attributes ;
+ 				     console.log ("xx" + xx);
+
+ 				     var pp = getAllParentalAttributes(d);
+
+ 				     console.log("pp " + pp + " ");
 					if (d.attributes.toString())
-						attrString = "Attributes: " + d.attributes.toString()
+						//attrString = "Attributes: " + d.attributes.toString()
+						attrString = "Attributes: " + pp
 								+ "<br /> <br />";
 
 					return attrString + objString + "Object Count: "
@@ -254,7 +277,7 @@ function drawDendrogram(e) {
 		if (document.getElementById('attributes').checked)
 			node.append("text").attr("transform", "translate(15, 0)").text(
 					function(d) {
-						return d.attributes
+						return d.attributes ;
 					});
 
 		if (document.getElementById('objects').checked)
