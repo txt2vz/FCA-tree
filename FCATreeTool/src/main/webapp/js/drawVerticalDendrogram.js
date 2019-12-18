@@ -146,6 +146,18 @@ function drawVerticalDendrogram(e) {
 		// centerNode(d);
 	}
 
+	function getAllParentalAttributes(d){
+		if (d.parent) {
+			var s = getAllParentalAttributes(d.parent);
+			s = s + ', ' + d.attributes.toString();
+			return s;
+		}
+		else
+		{
+			return d.attributes.toString();
+		}
+	}
+
 	function update(source) {
 
 		console.log("in update");
@@ -237,7 +249,8 @@ function drawVerticalDendrogram(e) {
 
 							if (d.attributes.toString())
 								attrString = "Attributes: "
-										+ d.attributes.toString()
+									//	+ d.attributes.toString()
+									+ getAllParentalAttributes(d)
 										+ "<br /> <br />";
 
 							return attrString + objString + "Object Count: " + d.ObjectCount;

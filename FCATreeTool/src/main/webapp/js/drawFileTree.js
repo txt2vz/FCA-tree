@@ -59,6 +59,18 @@ function drawFileTree(e) {
 		}
 	}
 
+	function getAllParentalAttributes(d){
+		if (d.parent) {
+			var s = getAllParentalAttributes(d.parent);
+			s = s + ', ' + d.attributes.toString();
+			return s;
+		}
+		else
+		{
+			return d.attributes.toString();
+		}
+	}
+
 	function render(treeData, parent) {
 		var nodes = tree.nodes(treeData), duration = 250;
 
@@ -114,12 +126,18 @@ function drawFileTree(e) {
 							var objString = "";
 							var attrString = "";
 
+							var allAttrString ="";
+
 							if (d._children)
 								objString = d.objects.sort().toString();
 							else
 								objString = d.own_objects.sort().toString();
 
 							var maxStringLength = 150;
+
+							var allParentalAttributes = getAllParentalAttributes(d);
+						//	allParentalAttributes = "neds-watr lv";
+							console.log("all parenta atts " + allParentalAttributes);
 
 							if (d.attributes.toString())
 								attrString = d.attributes.toString();
@@ -135,7 +153,7 @@ function drawFileTree(e) {
 										
 							//attrString = attrString.replace(/ /g, "&nbsp;");
 							if (document.getElementById('attributes').checked) {
-								attrString = "<span style=color:green> <strong>Attributes:&nbsp;</strong>"
+								attrString = "<span style=color:green title='" + allParentalAttributes + "'> <strong>Attributes:&nbsp;</strong>"
 										+ attrString + "</span><br /> ";
 							} else
 								attrString = "";

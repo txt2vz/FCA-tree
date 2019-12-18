@@ -150,7 +150,7 @@ function drawDendrogram(e) {
 	function getAllParentalAttributes(d){
 		if (d.parent) {
 			var s = getAllParentalAttributes(d.parent);
-			s = s + d.attributes.toString();
+			s = s + ', ' + d.attributes.toString();
 			return s;
 		}
 		else
@@ -243,13 +243,13 @@ function drawDendrogram(e) {
 					var objString = "";
 					var attrString = "";
 
-					if (d._children) {
-						objString = d.objects.toString();
-					} else {
-						objString = d.own_objects.toString();
-					}
-					;
+					// if (d._children) {
+					// 	objString = d.objects.toString();
+					// } else {
+					// 	objString = d.own_objects.toString();
+					// };
 
+					objString = d.objects.toString();
 					if (objString.length > max)
 						objString = objString.substring(0, max) + '...';
 					if (attrString.length > max)
@@ -262,12 +262,12 @@ function drawDendrogram(e) {
 						 xx= d.parent.attributes ;
  				     console.log ("xx" + xx);
 
- 				     var pp = getAllParentalAttributes(d);
+ 				     var allParentalAttributes = getAllParentalAttributes(d);
 
- 				     console.log("pp " + pp + " ");
+ 				     console.log("allParentalAttributes " + allParentalAttributes + " ");
 					if (d.attributes.toString())
 						//attrString = "Attributes: " + d.attributes.toString()
-						attrString = "Attributes: " + pp
+						attrString = "Attributes: " + allParentalAttributes
 								+ "<br /> <br />";
 
 					return attrString + objString + "Object Count: "
