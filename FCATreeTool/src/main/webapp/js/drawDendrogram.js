@@ -27,7 +27,6 @@ function drawDendrogram(e) {
 
 	var tree = d3.layout.tree().size([ viewerHeight, viewerWidth ]);
 
-
 	// define a d3 diagonal projection for use by the node paths later on.
 	var diagonal = d3.svg.diagonal().projection(function(d) {
 		return [ d.y, d.x ];
