@@ -7,6 +7,12 @@ function drawDendrogram(e) {
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
 
+    populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+
+    if ($("#attributeDropdown option:selected").text() != "none") {
+        treeData = prune(treeData, {});
+      }
+
     var fillColour = "mediumslateblue";
     // Calculate total nodes, max label length
     var totalNodes = 0;
@@ -261,9 +267,7 @@ function drawDendrogram(e) {
 
                 var allParentalAttributes = getAllParentalAttributes(d);
 
-                console.log("allParentalAttributes " + allParentalAttributes + " ");
                 if (d.attributes.toString())
-                    //attrString = "Attributes: " + d.attributes.toString()
                     attrString = "Attributes: " + allParentalAttributes
                         + "<br /> <br />";
 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+            rel="stylesheet">
+
+    <style type="text/css">
+        .overlay {
+            background-color: #FFF;
+        }
+
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+        .node text {
+            font-size: 10px;
+            font-family: sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
+
+        .selected {
+            color: orange;
+        }
+
+        .hint {
+            float: right;
+            color: blue;
+            margin-right: 80px;
+            font-style: oblique;
+        }
+
+        .node {
+            cursor: pointer;
+            position: absolute;
+            list-style: none;
+            font-size: 14px;
+        }
+
+        .node span {
+            margin-right: 3px;
+        }
+
+        span {
+            white-space: nowrap;
+        }
+    </style>
+
+    <title>Title</title>
+
+</head>
+<body>
+
+<div id="tree-container"></div>
+
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<script type="text/javascript" src="js/treelist.js" defer></script>
+<script type="text/javascript" src="js/solY.js" defer></script>
+
+
+<script>
+    $(document).ready(function () {
+       // drawFileTree();
+    });
+
+</script>
+
+</body>
+</html>
