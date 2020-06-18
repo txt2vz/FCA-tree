@@ -108,7 +108,7 @@
 <div>
 		<span> 2. Select a valid JSON file and upload/draw: <input
                 type="file" id="files"/>
-			<button id="upload">Upload->Draw Tree</button>
+			<button id="upload"> Upload and Process File</button>  <button id="drawT">Draw Tree</button>
 		</span> <span class="hint" id="verticalHint"> Mouse over node to see
 			attribute and object information </span>
 </div>
@@ -118,12 +118,12 @@
 <script>
 
     function populateAttributeDropdown(attributeSet) {
-        $('#attributeDropdown').children('option:not(:first)').remove();
+    //    $('#attributeDropdown').children('option:not(:first)').remove();
      //   $("select[name ='attributeDropdown']").children('option:not(:first)').remove();
        // $("select[name ='attributeDropdown']").append('<option>none</option>');
        // $('#attributeDropdown').children().remove();
 
-         var x = document.getElementById("attributeDropdown");
+     //    var x = document.getElementById("attributeDropdown");
         // for (i=1; i<x.length; i++) {
         //     console.log("removing i " + i);
         //     x.remove(i);
@@ -132,17 +132,33 @@
       //  x.length=0;
 
 
-        console.log("attribute set size " + attributeSet.size);
-
-        let zog =["none", "breast feeds", "cn"];
+     //   console.log("attribute set size " + attributeSet.size);
+//
+//        let zog =["none", "breast feeds", "cn"];
         var attributes = //zog;
             Array.from(attributeSet);
 
         console.log(" att 2 " + attributes[2]);
 
-        var sel = document.getElementById('attributeDropdown');
-        var fragment = document.createDocumentFragment();
+       // var attSelectDropDown = document.getElementById('attributeDropdown');
+        $("#attributeDropdown").remove();
 
+
+        var fragment = document.createDocumentFragment();
+        var selectEl = document.createElement('select');
+        selectEl.id='attributeDropdown';
+        fragment.append(selectEl);
+        var sel = document.getElementById('attSelectSpan');
+        sel.appendChild(fragment);
+
+        var sel2 = document.getElementById('attributeDropdown');
+        var fragment2 = document.createDocumentFragment();
+
+         var opt0 = document.createElement('option');
+         opt0.text="none";
+         fragment2.appendChild(opt0);
+
+        //
         attributes.forEach(function(att, index) {
             var opt = document.createElement('option');
             console.log ("att is " + att + " index " + index);
@@ -152,25 +168,13 @@
             opt.index= index;
             opt.innerText=att;
 
-            fragment.appendChild(opt);
+            fragment2.appendChild(opt);
         });
-        sel.appendChild(fragment);
 
 
+        sel2.appendChild(fragment2);
 
-       // $('#attributeDropdown').empty();
 
-        // for (i = 0; i < zog.length; i++) {
-        //     var data = '<option>' + zog[i] + '</option>'
-        //     $("select[name ='attributeDropdown']").append(data);
-        // }
-
-        // $.each(attributes, function (val, text) {
-        //     console.log("appendingn gds " + val + " texst " + text);
-        //     $('#attributeDropdown').append(
-        //         $('<option></option>').val(val).html(text)
-        //     );
-        // });
         $("#attSelectSpan").show();
     }
 
@@ -212,6 +216,7 @@
 
     var fileInput = $('#files');
     var uploadButton = $('#upload');
+    var drawButton = $('#drawT')
     var first = true;
 
     function setAtts(e){
@@ -237,6 +242,23 @@
         if (input.files.length) {
             var textFile = input.files[0];
             reader.readAsText(textFile);
+                      $(reader).on('load', setAtts);
+
+    }}
+
+    function drawT() {
+
+        var input;
+        if (!window.FileReader) {
+            alert('Your browser is not supported')
+        }
+        input = fileInput.get(0);
+
+        // Create a reader object
+        var reader = new FileReader();
+        if (input.files.length) {
+            var textFile = input.files[0];
+            reader.readAsText(textFile);
 
             if ($("#treeType").val() == "list") {
                 $(reader).on('load', drawFileTree);
@@ -244,10 +266,10 @@
                 $(reader).on('load', drawVerticalDendrogram);
 
             } else {
-                if (first) {
-                      $(reader).on('load', setAtts);
-                     // first = false;
-                }
+                // if (first) {
+                //     $(reader).on('load', setAtts);
+                //     //   first = false;
+                // }
                 $(reader).on('load', drawDendrogram);
             }
         } else {
@@ -257,6 +279,8 @@
     };
 
     uploadButton.on('click', reload);
+    drawButton.on('click', drawT);
+
 </script>
 </body>
 </html>

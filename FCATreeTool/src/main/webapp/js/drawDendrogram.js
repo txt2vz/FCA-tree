@@ -4,8 +4,29 @@ function drawDendrogram(e) {
     console.log("in drawDendrongram");
     d3.selectAll("li").remove();
     d3.select("svg").remove();
+
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
+    //popDropDown();
+
+    //
+    // var jsonFile = e.target.result;
+    // var treeData = JSON.parse(jsonFile);
+
+    // let a= getSetOfAttributes(treeData, new Set());
+    //
+    // console.log(" a " + a);
+    // populateAttributeDropdown(a);   //getSetOfAttributes(treeData, new Set()));
+
+   // populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+
+    var t = $("#attributeDropdown option:selected").text();
+
+    console.log("t " + t);
+
+    if ($("#attributeDropdown option:selected").text() != "none") {
+        treeData = prune(treeData, {});
+    }
 
     var fillColour = "mediumslateblue";
     // Calculate total nodes, max label length
@@ -253,15 +274,15 @@ function drawDendrogram(e) {
                     attrString = attrString.substring(0, max) + '...';
 
                 objString = "Objects:&nbsp;" + objString + "<br /> <br />";
-                var xx = "";
+                // var xx = "";
 
-                if (d.parent)
-                    xx = d.parent.attributes;
-                console.log("xx" + xx);
-
+                // if (d.parent)
+                //     xx = d.parent.attributes;
+                // console.log("xx" + xx);
+                attributeDropdown
                 var allParentalAttributes = getAllParentalAttributes(d);
 
-                console.log("allParentalAttributes " + allParentalAttributes + " ");
+             //   console.log("allParentalAttributes " + allParentalAttributes + " ");
                 if (d.attributes.toString())
                     //attrString = "Attributes: " + d.attributes.toString()
                     attrString = "Attributes: " + allParentalAttributes

@@ -1,11 +1,17 @@
 function drawFileTree(e) {
 
     // $("#tree-container").height(); //$(document).height();
-    console.log("in drawFileTree");
+    console.log("in drawFileTree V");
     d3.select("svg").remove();
 
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
+
+    populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+
+    if ($("#attributeDropdown option:selected").text() != "none") {
+        treeData = prune(treeData, {});
+    }
 
     var fillColour = "mediumslateblue";
     // Calculate total nodes, max label length
