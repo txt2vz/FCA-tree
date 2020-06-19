@@ -7,7 +7,11 @@ function drawFileTree(e) {
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
 
-    populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+    // populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+    //
+    // if ($("#attributeDropdown option:selected").text() != "none") {
+    //     treeData = prune(treeData, {});
+    // }
 
     if ($("#attributeDropdown option:selected").text() != "none") {
         treeData = prune(treeData, {});

@@ -7,22 +7,10 @@ function drawDendrogram(e) {
 
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
-    //popDropDown();
 
+    // var t = $("#attributeDropdown option:selected").text();
     //
-    // var jsonFile = e.target.result;
-    // var treeData = JSON.parse(jsonFile);
-
-    // let a= getSetOfAttributes(treeData, new Set());
-    //
-    // console.log(" a " + a);
-    // populateAttributeDropdown(a);   //getSetOfAttributes(treeData, new Set()));
-
-   // populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
-
-    var t = $("#attributeDropdown option:selected").text();
-
-    console.log("t " + t);
+    // console.log("t " + t);
 
     if ($("#attributeDropdown option:selected").text() != "none") {
         treeData = prune(treeData, {});
