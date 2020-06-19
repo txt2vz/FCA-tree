@@ -67,7 +67,7 @@
 
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="https://d3js.org/d3.v3.min.js"></script>
-
+	<script type="text/javascript" src="js/popluateAttributeDropdown.js" defer></script>
 	<script type="text/javascript" src="js/pruneUsingAttribute.js" defer></script>
 	<script type="text/javascript" src="js/treelist.js" defer></script>
 	<script type="text/javascript" src="js/drawFileTree.js" defer></script>
@@ -82,14 +82,13 @@
 	<span id="fcaHead">FCA Tree Tool  &nbsp; &nbsp; &nbsp; </span>
 	<span> 1. Select a valid JSON file:  <input type="file" id="files"/> </span>
 
-	2. <button id="upload">Upload and Process File</button> &nbsp;
 	Display type:
 	<select id="treeType">
 		<option value="dendrogram">dendrogram</option>
 		<option value="list">expandable list</option>
 		<option value="verticalDendrogram">vertical dendrogram</option>
 	</select>
-
+	<button id="upload">Upload and Process File</button> &nbsp;
 </div>
 
 <div id="line2">
@@ -100,13 +99,13 @@
        &nbsp;Object Count: <input type="checkbox" id="objectCount" name="objectCount">
 	</span>
 	<span id=attSelectSpan>
-    		&nbsp; Restrict to nodes with attribute or descendent attribute:
+    		Restrict to nodes with attribute for node or descendent node:
 		<select id="attributeDropdown" name="attributeDropdown">
 			<option>none</option>
 		</select>
 
 	</span>
-	&nbsp; &nbsp;3.<button id="drawT" style="background-color: paleturquoise">Draw Tree</button>
+	<button id="drawT">2. Draw Tree</button>
 	<span class="hint" id="dendHint"> Mouse wheel to zoom. Hold
 		click and move mouse to move tree </span>
 	</span> <span class="hint" id="verticalHint"> Mouse over node to see
@@ -185,14 +184,14 @@
 				$(".hint").show();
 			}
 		});
-		//
-		// $("#attributeDropdown").change(function () {
-		// 	reload();
-		// });
-		//
-		// $(':checkbox').change(function () {
-		// 	reload();
-		// });
+
+		$("#attributeDropdown").change(function () {
+			reload(false);
+		});
+
+		$(':checkbox').change(function () {
+			reload(false);
+		});
 	});
 
 	const fileInput = $('#files');
@@ -210,7 +209,7 @@
 
 	}
 
-	function reload() {
+	function reload(uploadNewFile) {
 
 		if (!window.FileReader) {
 			alert('Your browser is not supported')
