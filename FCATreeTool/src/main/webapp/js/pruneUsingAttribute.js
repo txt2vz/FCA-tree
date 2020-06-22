@@ -47,6 +47,32 @@ function prune(tree, result) {
     }
     return result;
 }
+function getObjectStringForAttributeSelect(d) {
+
+    let objString = '';
+    let isInternalNode = false;
+
+    if (d.children) {
+        isInternalNode = d.children.length > 0
+    } else if (d._children) {
+        isInternalNode = d._children.length > 0
+    }
+
+    if (isInternalNode) {
+        objStr = d.own_objects.toString();
+
+    } else {
+
+        let objectSet = new Set(d.own_objects);
+        d.objects.forEach(item => objectSet.add(item));
+
+        for (let item of objectSet) {
+            objString = objString + item + ", ";
+        }
+        console.log("node " + d.Node + " objectSet " + objectSet.size + " objString " + objString);
+    }
+    return objStr;
+}
 
 
 

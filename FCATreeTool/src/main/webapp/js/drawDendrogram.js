@@ -8,11 +8,13 @@ function drawDendrogram(e) {
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
 
+    const attributeSelected = $("#attributeDropdown option:selected").text() != "none";
+
     // var t = $("#attributeDropdown option:selected").text();
     //
     // console.log("t " + t);
 
-    if ($("#attributeDropdown option:selected").text() != "none") {
+    if (attributeSelected) {
         treeData = prune(treeData, {});
     }
 
@@ -41,10 +43,13 @@ function drawDendrogram(e) {
         return [d.y, d.x];
     });
 
-    if (treeData.children)
-        treeData.children.forEach(function (child) {
-            collapse(child);
-        });
+    if (!attributeSelected) {
+        if (treeData.children)
+            treeData.children.forEach(function (child) {
+                collapse(child);
+            });
+    }
+    ;
 
     // TODO: Pan function, can be better implemented.
     function pan(domNode, direction) {
@@ -165,6 +170,8 @@ function drawDendrogram(e) {
         }
     }
 
+
+
     function update(source) {
 
         // var oneLevel = true;// $('input[name=type]:checked',
@@ -245,15 +252,8 @@ function drawDendrogram(e) {
         node.append("svg:title").html(
             function (d) {
                 var max = 800;
-                // var returnString = "";
                 var objString = "";
                 var attrString = "";
-
-                // if (d._children) {
-                // 	objString = d.objects.toString();
-                // } else {
-                // 	objString = d.own_objects.toString();
-                // };
 
                 objString = d.objects.toString();
                 if (objString.length > max)
@@ -262,19 +262,13 @@ function drawDendrogram(e) {
                     attrString = attrString.substring(0, max) + '...';
 
                 objString = "Objects:&nbsp;" + objString + "<br /> <br />";
-                // var xx = "";
 
-                // if (d.parent)
-                //     xx = d.parent.attributes;
-                // console.log("xx" + xx);
-                attributeDropdown
                 var allParentalAttributes = getAllParentalAttributes(d);
 
-             //   console.log("allParentalAttributes " + allParentalAttributes + " ");
-                if (d.attributes.toString())
-                    //attrString = "Attributes: " + d.attributes.toString()
-                    attrString = "Attributes: " + allParentalAttributes
-                        + "<br /> <br />";
+                if (d.attributes.toString()) {
+                    attrString = "Attributes: " + allParentalAttributes + "<br /> <br />";
+                }
+                ;
 
                 return attrString + objString + "Object Count: "
                     + d.ObjectCount;
@@ -286,15 +280,19 @@ function drawDendrogram(e) {
                     return d.attributes;
                 });
 
-        if (document.getElementById('objects').checked)
+        if (document.getElementById('objects').checked) {
             node.append("text").attr("transform", "translate(15, 12)").text(
                 function (d) {
 
-                    if (d._children)
+                    if (attributeSelected) {
+                      return  getObjectStringForAttributeSelect(d);
+                    }
+                    else if (d._children)
                         return d.objects;
                     else
                         return d.own_objects;
                 });
+        }
 
         if (document.getElementById('objectCount').checked)
             node.append("text").attr("transform", "translate(15, 24)").text(
