@@ -1,5 +1,5 @@
 function drawFileTree(e) {
-
+    let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
     // $("#tree-container").height(); //$(document).height();
     console.log("in drawFileTree V");
     d3.select("svg").remove();
@@ -7,7 +7,7 @@ function drawFileTree(e) {
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
 
-    if ($("#attributeDropdown option:selected").text() != "none") {
+    if (attributeSelected) {
         treeData = prune(treeData, {});
     }
 
@@ -165,6 +165,11 @@ function drawFileTree(e) {
                     //console.log("obje sgtting " + objString);
 
                     if (document.getElementById('objects').checked) {
+
+                        if (attributeSelected) {
+                            objString=  getObjectStringForAttributeSelect(d);
+                        }
+
                         objString = "<span style=color:blue><strong>Objects:&nbsp;</strong>"
                             + objString + "</span><br /> ";
                     } else

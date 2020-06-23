@@ -1,5 +1,6 @@
 function drawVerticalDendrogram(e) {
 
+	let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
 	// $("#tree-container").height(); //$(document).height();
 	console.log("in drawDendrongram");
 	d3.select("svg").remove();
@@ -8,7 +9,7 @@ function drawVerticalDendrogram(e) {
 	var jsonFile = e.target.result;
 	var treeData = JSON.parse(jsonFile);
 
-	if ($("#attributeDropdown option:selected").text() != "none") {
+	if (attributeSelected) {
 		treeData = prune(treeData, {});
 	}
 
@@ -241,6 +242,10 @@ function drawVerticalDendrogram(e) {
 							} else {
 								objString = d.own_objects.toString();
 							};
+
+							if (attributeSelected) {
+								objString=  getObjectStringForAttributeSelect(d);
+							}
 
 							if (objString.length > max)
 								objString = objString.substring(0, max) + '...';

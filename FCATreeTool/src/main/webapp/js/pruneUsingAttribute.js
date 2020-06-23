@@ -1,4 +1,40 @@
 
+function populateAttributeDropdown(attributeSet) {
+
+    const attributes = Array.from(attributeSet).sort();
+
+    $("#attributeDropdown").remove();
+
+    const selectFragment = document.createDocumentFragment();
+    const selectEl = document.createElement('select');
+    selectEl.id = 'attributeDropdown';
+    selectFragment.append(selectEl);
+
+    const selSpan = document.getElementById('attSelectSpan');
+    selSpan.appendChild(selectFragment);
+
+    const selAttributeDropdown = document.getElementById('attributeDropdown');
+    const optionsFragment = document.createDocumentFragment();
+
+    const opt0 = document.createElement('option');
+    opt0.text = "none";
+    optionsFragment.appendChild(opt0);
+
+    attributes.forEach(function (att, index) {
+        const opt = document.createElement('option');
+        opt.innerHTML = att;
+        opt.value = att;
+        opt.text = att;
+        opt.index = index;
+        opt.innerText = att;
+
+        optionsFragment.appendChild(opt);
+    });
+
+    selAttributeDropdown.appendChild(optionsFragment);
+    $("#attSelectSpan").show();
+}
+
 function getSetOfAttributes(tree, attSet) {
 
     if (tree.attributes) {
@@ -59,19 +95,20 @@ function getObjectStringForAttributeSelect(d) {
     }
 
     if (isInternalNode) {
-        objStr = d.own_objects.toString();
+        objStr = d.own_objects.sort().toString();
 
     } else {
 
         let objectSet = new Set(d.own_objects);
         d.objects.forEach(item => objectSet.add(item));
 
-        for (let item of objectSet) {
+        const objectArray = Array.from(objectSet).sort();
+
+        for (const item of objectArray) {
             objString = objString + item + ", ";
         }
-        console.log("node " + d.Node + " objectSet " + objectSet.size + " objString " + objString);
     }
-    return objStr;
+    return objString;
 }
 
 

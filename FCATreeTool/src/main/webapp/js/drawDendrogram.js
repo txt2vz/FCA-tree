@@ -1,14 +1,15 @@
 function drawDendrogram(e) {
 
     // $("#tree-container").height(); //$(document).height();
+    let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
     console.log("in drawDendrongram");
+    console.log("attributselect " + attributeSelected);
     d3.selectAll("li").remove();
     d3.select("svg").remove();
 
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
 
-    const attributeSelected = $("#attributeDropdown option:selected").text() != "none";
 
     // var t = $("#attributeDropdown option:selected").text();
     //
@@ -288,9 +289,9 @@ function drawDendrogram(e) {
                       return  getObjectStringForAttributeSelect(d);
                     }
                     else if (d._children)
-                        return d.objects;
+                        return d.objects.sort();
                     else
-                        return d.own_objects;
+                        return d.own_objects.sort();
                 });
         }
 

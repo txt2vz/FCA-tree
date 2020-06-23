@@ -1,94 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<style type="text/css">
-		.overlay {
-			background-color: #FFF;
-		}
+    <meta charset="utf-8">
+    <style type="text/css">
+        .overlay {
+            background-color: #FFF;
+        }
 
-		#fcaHead {
-			font-size: 28px;
-			color: blue;
-		}
+        #fcaHead {
+            font-size: 28px;
+            color: blue;
+        }
 
-		.node circle {
-			fill: #fff;
-			stroke: steelblue;
-			stroke-width: 1.5px;
-		}
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
 
-		.node text {
-			font-size: 10px;
-			font-family: sans-serif;
-		}
+        .node text {
+            font-size: 10px;
+            font-family: sans-serif;
+        }
 
-		.link {
-			fill: none;
-			stroke: #ccc;
-			stroke-width: 1.5px;
-		}
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+        }
 
-		.selected {
-			color: orange;
-		}
+        .selected {
+            color: orange;
+        }
 
-		.hint {
-			float: right;
-			color: blue;
-			margin-right: 80px;
-			font-style: oblique;
-		}
+        .hint {
+            float: right;
+            color: blue;
+            margin-right: 80px;
+            font-style: oblique;
+        }
 
-		.node {
-			cursor: pointer;
-			position: absolute;
-			list-style: none;
-			font-size: 14px;
-		}
+        .node {
+            cursor: pointer;
+            position: absolute;
+            list-style: none;
+            font-size: 14px;
+        }
 
-		.node span {
-			margin-right: 3px;
-		}
+        .node span {
+            margin-right: 3px;
+        }
 
-		span {
-			white-space: nowrap;
-		}
-	</style>
+        span {
+            white-space: nowrap;
+        }
+    </style>
 
-	<link
-			href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
-			rel="stylesheet">
+    <link
+            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+            rel="stylesheet">
 
-	<link rel="shortcut icon" href="favicon.ico">
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
 
-	<script type="text/javascript" src="js/pruneUsingAttribute.js" defer></script>
-	<script type="text/javascript" src="js/treelist.js" defer></script>
-	<script type="text/javascript" src="js/drawFileTree.js" defer></script>
-	<script type="text/javascript" src="js/drawDendrogram.js" defer></script>
-	<script type="text/javascript" src="js/drawVerticalDendrogram.js" defer></script>
+    <script type="text/javascript" src="js/pruneUsingAttribute.js" defer></script>
+    <script type="text/javascript" src="js/treelist.js" defer></script>
+    <script type="text/javascript" src="js/drawFileTree.js" defer></script>
+    <script type="text/javascript" src="js/drawDendrogram.js" defer></script>
+    <script type="text/javascript" src="js/drawVerticalDendrogram.js" defer></script>
 
-	<title>FCA Tree Tool</title>
+    <title>FCA Tree Tool</title>
 </head>
 
 <body>
 <div>
-	<span id="fcaHead">FCA Tree Tool  &nbsp; &nbsp; &nbsp; </span>
-	<span> 1. Select a valid JSON file:  <input type="file" id="files"/> </span>
+    <span id="fcaHead">FCA Tree Tool  &nbsp; &nbsp; &nbsp; </span>
+    <span> 1. Select a valid JSON file:  <input type="file" id="files"/> </span>
 
-	2. <button id="upload">Upload and Process File</button> &nbsp;
-	Display type:
-	<select id="treeType">
-		<option value="dendrogram">dendrogram</option>
-		<option value="list">expandable list</option>
-		<option value="verticalDendrogram">vertical dendrogram</option>
-	</select>
+    2.
+    <button id="upload">Upload and Process File</button> &nbsp;
+    Display type:
+    <select id="treeType">
+        <option value="dendrogram">dendrogram</option>
+        <option value="list">expandable list</option>
+        <option value="verticalDendrogram">vertical dendrogram</option>
+    </select>
 
 </div>
 
@@ -96,20 +97,21 @@
 
 <span id="viewoptions"> &nbsp; Options:
 		Attributes: <input type="checkbox" id="attributes" name="attributes">
-		Objects: <input type="checkbox" id="objects"  name="objects">
+		Objects: <input type="checkbox" id="objects" name="objects">
        &nbsp;Object Count: <input type="checkbox" id="objectCount" name="objectCount">
 	</span>
-	<span id=attSelectSpan>
+    <span id=attSelectSpan>
     		&nbsp; Restrict to nodes with attribute or descendent attribute:
 		<select id="attributeDropdown" name="attributeDropdown">
 			<option>none</option>
 		</select>
 
 	</span>
-	&nbsp; &nbsp;3.<button id="drawT" style="background-color: paleturquoise">Draw Tree</button>
-	<span class="hint" id="dendHint"> Mouse wheel to zoom. Hold
+    &nbsp; &nbsp;3.
+    <button id="draw" style="background-color: paleturquoise">Draw Tree</button>
+    <span class="hint" id="dendHint"> Mouse wheel to zoom. Hold
 		click and move mouse to move tree </span>
-	</span> <span class="hint" id="verticalHint"> Mouse over node to see
+    </span> <span class="hint" id="verticalHint"> Mouse over node to see
 			attribute and object information </span>
 </div>
 
@@ -117,147 +119,96 @@
 
 <script>
 
-	function populateAttributeDropdown(attributeSet) {
+    let treeType = $("#treeType").val();
 
-		const attributes = Array.from(attributeSet);
+    $(document).ready(function () {
 
-		console.log(" att 2 " + attributes[2]);
+        $("#files").change(function () {
+            $("#line2").hide();
+        });
 
-		$("#attributeDropdown").remove();
+        $("#attSelectSpan").hide();
+        $("#viewoptions").show();
+        $("#dendHint").hide();
+        $("#verticalHint").hide();
+        $("#line2").hide();
 
-		var selectFragment = document.createDocumentFragment();
-		var selectEl = document.createElement('select');
-		selectEl.id = 'attributeDropdown';
-		selectFragment.append(selectEl);
+        $('#objects').val(this.checked);
 
-		var selSpan = document.getElementById('attSelectSpan');
-		selSpan.appendChild(selectFragment);
+        $("select#treeType").on('change', function () {
 
-		var selAttributeDropdown = document.getElementById('attributeDropdown');
-		var optionsFragment = document.createDocumentFragment();
+            treeType = $("#treeType").val();
 
-		var opt0 = document.createElement('option');
-		opt0.text = "none";
-		optionsFragment.appendChild(opt0);
+            if (treeType== "verticalDendrogram") {
+                $("#viewoptions").hide();
+            } else {
+                $("#viewoptions").show();
+            }
 
-		attributes.forEach(function (att, index) {
-			const opt = document.createElement('option');
-			// console.log ("att is " + att + " index " + index);
-			opt.innerHTML = att;
-			opt.value = att;
-			opt.text = att;
-			opt.index = index;
-			opt.innerText = att;
+            if (treeType == "list") {
+                $(".hint").hide();
+            } else {
+                $(".hint").show();
+            }
+        });
+    });
 
-			optionsFragment.appendChild(opt);
-		});
+    const fileInput = $('#files');
+    const uploadButton = $('#upload');
+    const drawButton = $('#draw')
 
-		selAttributeDropdown.appendChild(optionsFragment);
+    function setAtts(e) {
 
-		$("#attSelectSpan").show();
-	}
+        const jsonFile = e.target.result;
+        const treeData = JSON.parse(jsonFile);
+        populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+    }
 
-	$(document).ready(function () {
-		$("#files").change(function(){
-			$("#line2").hide();
+    function reload() {
 
-		});
+        if (!window.FileReader) {
+            alert('Your browser is not supported')
+        }
+        let input = fileInput.get(0);
+        console.log("in reoload");
+        $("#line2").show();
 
-		$("#attSelectSpan").hide();
-		$("#viewoptions").show();
-		$("#dendHint").hide();
-		$("#verticalHint").hide();
-		$("#line2").hide();
+        const reader = new FileReader();
+        if (input.files.length) {
+            var textFile = input.files[0];
+            reader.readAsText(textFile);
+            $(reader).on('load', setAtts);
+        }
+    }
 
-		$('#objects').val(this.checked);
+    function draw() {
 
-		$("select#treeType").on('change', function () {
+        console.log (" in draw ");
 
-			if ($("#treeType").val() == "verticalDendrogram") {
-				$("#viewoptions").hide();
-			} else {
-				$("#viewoptions").show();
-			}
+        if (!window.FileReader) {
+            alert('Your browser is not supported')
+        }
+        var input = fileInput.get(0);
 
-			if ($("#treeType").val() == "list") {
-				$(".hint").hide();
-			} else {
-				$(".hint").show();
-			}
-		});
-		//
-		// $("#attributeDropdown").change(function () {
-		// 	reload();
-		// });
-		//
-		// $(':checkbox').change(function () {
-		// 	reload();
-		// });
-	});
+        const reader = new FileReader();
+        if (input.files.length) {
+            var textFile = input.files[0];
+            reader.readAsText(textFile);
 
-	const fileInput = $('#files');
-	const uploadButton = $('#upload');
-	const drawButton = $('#drawT')
+            if (treeType == "list") {
+                $(reader).on('load', drawFileTree);
+            } else if (treeType == "verticalDendrogram") {
+                $(reader).on('load', drawVerticalDendrogram);
+            } else {
+                $(reader).on('load', drawDendrogram);
+            }
+        } else {
+            alert('Please select a valid json file before continuing')
+        }
+    }
 
-	function setAtts(e) {
-
-		const jsonFile = e.target.result;
-		const treeData = JSON.parse(jsonFile);
-		const a = getSetOfAttributes(treeData, new Set());
-
-		console.log(" a " + a);
-		populateAttributeDropdown(a);
-
-	}
-
-	function reload() {
-
-		if (!window.FileReader) {
-			alert('Your browser is not supported')
-		}
-		let input = fileInput.get(0);
-		console.log("in reoload");
-		$("#line2").show();
-		// Create a reader object
-		const reader = new FileReader();
-		if (input.files.length) {
-			var textFile = input.files[0];
-			reader.readAsText(textFile);
-			$(reader).on('load', setAtts);
-		}
-	}
-
-	function drawT() {
-
-		var input;
-		if (!window.FileReader) {
-			alert('Your browser is not supported')
-		}
-		input = fileInput.get(0);
-
-		// Create a reader object
-		var reader = new FileReader();
-		if (input.files.length) {
-			var textFile = input.files[0];
-			reader.readAsText(textFile);
-
-			if ($("#treeType").val() == "list") {
-				$(reader).on('load', drawFileTree);
-			} else if ($("#treeType").val() == "verticalDendrogram") {
-				$(reader).on('load', drawVerticalDendrogram);
-
-			} else {
-
-				$(reader).on('load', drawDendrogram);
-			}
-		} else {
-			if (uploadNewFile)
-				alert('Please select a valid json file before continuing')
-		}
-	};
-
-	uploadButton.on('click', reload);
-	drawButton.on('click', drawT);
+    uploadButton.on('click', reload);
+    drawButton.on('click', draw);
 
 </script>
 </body>
