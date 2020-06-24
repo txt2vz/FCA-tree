@@ -37,10 +37,12 @@ function drawVerticalDendrogram(e) {
 		return [ d.x, d.y ];
 	});
 
-	if (treeData.children)
-		treeData.children.forEach(function(child) {
-			collapse(child);
-		});
+	if (!attributeSelected) {
+		if (treeData.children)
+			treeData.children.forEach(function (child) {
+				collapse(child);
+			});
+	}
 
 	// TODO: Pan function, can be better implemented.
 	function pan(domNode, direction) {
@@ -151,17 +153,17 @@ function drawVerticalDendrogram(e) {
 		// centerNode(d);
 	}
 
-	function getAllParentalAttributes(d){
-		if (d.parent) {
-			var s = getAllParentalAttributes(d.parent);
-			s = s + ', ' + d.attributes.toString();
-			return s;
-		}
-		else
-		{
-			return d.attributes.toString();
-		}
-	}
+	// function getAllParentalAttributes(d){
+	// 	if (d.parent) {
+	// 		var s = getAllParentalAttributes(d.parent);
+	// 		s = s + ', ' + d.attributes.toString();
+	// 		return s;
+	// 	}
+	// 	else
+	// 	{
+	// 		return d.attributes.toString();
+	// 	}
+	// }
 
 	function update(source) {
 
@@ -232,8 +234,7 @@ function drawVerticalDendrogram(e) {
 				.append("svg:title")
 				.html(
 						function(d) {
-							var max = 800;
-							//var returnString = "";
+							const max = 800;
 							var objString = "";
 							var attrString = "";
 
@@ -252,6 +253,8 @@ function drawVerticalDendrogram(e) {
 							if (attrString.length > max)
 								attrString = attrString.substring(0, max)
 										+ '...';
+
+							if (objString.length <3 ) console.log("errror obj string " + objString);
 
 							objString = "Objects:&nbsp;" + objString
 									+ "<br /> <br />";

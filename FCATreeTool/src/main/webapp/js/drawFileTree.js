@@ -41,10 +41,13 @@ function drawFileTree(e) {
 
     d3.selectAll("li").remove();
 
-    if (treeData.children)
-        treeData.children.forEach(function (child) {
-            collapse(child);
-        });
+
+    if (!attributeSelected) {
+        if (treeData.children)
+            treeData.children.forEach(function (child) {
+                collapse(child);
+            });
+    }
 
     // Helper functions for collapsing and expanding nodes.
     function collapse(d) {
@@ -60,16 +63,6 @@ function drawFileTree(e) {
             d.children = d._children;
             d.children.forEach(expand);
             d._children = null;
-        }
-    }
-
-    function getAllParentalAttributes(d) {
-        if (d.parent) {
-            var s = getAllParentalAttributes(d.parent);
-            s = s + ', ' + d.attributes.toString();
-            return s;
-        } else {
-            return d.attributes.toString();
         }
     }
 
@@ -128,7 +121,6 @@ function drawFileTree(e) {
 
                     var objString = "";
                     var attrString = "";
-
                     var allAttrString = "";
 
                     if (d._children)
@@ -143,7 +135,7 @@ function drawFileTree(e) {
                     console.log("all parenta atts " + allParentalAttributes);
 
                     if (d.attributes.toString())
-                        attrString = d.attributes.toString();
+                        attrString = d.attributes.join(', ');  //.toString();
 
 //							if (objString.length > maxStringLength)
 //								objString = objString.substring(0,
@@ -152,7 +144,7 @@ function drawFileTree(e) {
 //							if (attrString.length > maxStringLength)
 //								attrString = attrString.substring(0,
 //										maxStringLength)
-                    +'...';
+ //                   +'...';
 
                     //attrString = attrString.replace(/ /g, "&nbsp;");
                     if (document.getElementById('attributes').checked) {

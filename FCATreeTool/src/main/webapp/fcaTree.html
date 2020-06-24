@@ -56,16 +56,16 @@
         }
     </style>
 
-    <link
-            href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
-            rel="stylesheet">
-
-    <link rel="shortcut icon" href="favicon.ico">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
 
     <script type="text/javascript" src="js/pruneUsingAttribute.js" defer></script>
@@ -86,16 +86,15 @@
     <button id="upload">Upload and Process File</button> &nbsp;
     Display type:
     <select id="treeType">
-        <option value="dendrogram">dendrogram</option>
         <option value="list">expandable list</option>
+        <option value="dendrogram">dendrogram</option>
         <option value="verticalDendrogram">vertical dendrogram</option>
     </select>
 
 </div>
-
 <div id="line2">
 
-<span id="viewoptions"> &nbsp; Options:
+<span id="viewoptions"> &nbsp; Show:
 		Attributes: <input type="checkbox" id="attributes" name="attributes">
 		Objects: <input type="checkbox" id="objects" name="objects">
        &nbsp;Object Count: <input type="checkbox" id="objectCount" name="objectCount">
@@ -105,7 +104,6 @@
 		<select id="attributeDropdown" name="attributeDropdown">
 			<option>none</option>
 		</select>
-
 	</span>
     &nbsp; &nbsp;3.
     <button id="draw" style="background-color: paleturquoise">Draw Tree</button>
@@ -123,6 +121,8 @@
 
     $(document).ready(function () {
 
+        $('#treeType').select2();
+
         $("#files").change(function () {
             $("#line2").hide();
         });
@@ -139,7 +139,7 @@
 
             treeType = $("#treeType").val();
 
-            if (treeType== "verticalDendrogram") {
+            if (treeType == "verticalDendrogram") {
                 $("#viewoptions").hide();
             } else {
                 $("#viewoptions").show();
@@ -169,7 +169,7 @@
         if (!window.FileReader) {
             alert('Your browser is not supported')
         }
-        let input = fileInput.get(0);
+        const input = fileInput.get(0);
         console.log("in reoload");
         $("#line2").show();
 
@@ -183,14 +183,12 @@
 
     function draw() {
 
-        console.log (" in draw ");
-
         if (!window.FileReader) {
             alert('Your browser is not supported')
         }
-        var input = fileInput.get(0);
-
+        const input = fileInput.get(0);
         const reader = new FileReader();
+
         if (input.files.length) {
             var textFile = input.files[0];
             reader.readAsText(textFile);

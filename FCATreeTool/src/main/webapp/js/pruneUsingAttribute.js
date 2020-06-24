@@ -1,56 +1,45 @@
-
 function populateAttributeDropdown(attributeSet) {
 
-    const attributes = Array.from(attributeSet).sort();
+    let attributes = Array.from(attributeSet).sort();
+    attributes.unshift('none');
+    $('#attributeDropdown').empty().trigger("change");
 
-    $("#attributeDropdown").remove();
-
-    const selectFragment = document.createDocumentFragment();
-    const selectEl = document.createElement('select');
-    selectEl.id = 'attributeDropdown';
-    selectFragment.append(selectEl);
-
-    const selSpan = document.getElementById('attSelectSpan');
-    selSpan.appendChild(selectFragment);
-
-    const selAttributeDropdown = document.getElementById('attributeDropdown');
-    const optionsFragment = document.createDocumentFragment();
-
-    const opt0 = document.createElement('option');
-    opt0.text = "none";
-    optionsFragment.appendChild(opt0);
-
-    attributes.forEach(function (att, index) {
-        const opt = document.createElement('option');
-        opt.innerHTML = att;
-        opt.value = att;
-        opt.text = att;
-        opt.index = index;
-        opt.innerText = att;
-
-        optionsFragment.appendChild(opt);
+    $("#attributeDropdown").select2({
+        data: attributes,
+        width: '15%'
     });
 
-    selAttributeDropdown.appendChild(optionsFragment);
     $("#attSelectSpan").show();
+}
+
+function getAllParentalAttributes(d) {
+    if (d.parent) {
+        var s = getAllParentalAttributes(d.parent);
+        s = s + ', ' + d.attributes.toString();
+        return s;
+    } else {
+        return d.attributes.toString();
+    }
 }
 
 function getSetOfAttributes(tree, attSet) {
 
     if (tree.attributes) {
-        tree.attributes.forEach(attr => {attSet.add(attr)});
+        tree.attributes.forEach(attr => {
+            attSet.add(attr)
+        });
     }
 
     if (tree.children) {
         tree.children.forEach(child =>
-            getSetOfAttributes(child , attSet));
+            getSetOfAttributes(child, attSet));
     }
     return attSet;
 }
 
 function hasAttributeOrDescendantAttribute(tree) {
     if (tree.attributes) {
-        if (tree.attributes.some(attr => attr == $("#attributeDropdown option:selected").text() ))
+        if (tree.attributes.some(attr => attr == $("#attributeDropdown option:selected").text()))
             return true;
     }
 
@@ -83,6 +72,7 @@ function prune(tree, result) {
     }
     return result;
 }
+
 function getObjectStringForAttributeSelect(d) {
 
     let objString = '';
@@ -102,11 +92,7 @@ function getObjectStringForAttributeSelect(d) {
         let objectSet = new Set(d.own_objects);
         d.objects.forEach(item => objectSet.add(item));
 
-        const objectArray = Array.from(objectSet).sort();
-
-        for (const item of objectArray) {
-            objString = objString + item + ", ";
-        }
+        objString = Array.from(objectSet).sort().join(', ');
     }
     return objString;
 }

@@ -10,11 +10,6 @@ function drawDendrogram(e) {
     var jsonFile = e.target.result;
     var treeData = JSON.parse(jsonFile);
 
-
-    // var t = $("#attributeDropdown option:selected").text();
-    //
-    // console.log("t " + t);
-
     if (attributeSelected) {
         treeData = prune(treeData, {});
     }
@@ -50,7 +45,6 @@ function drawDendrogram(e) {
                 collapse(child);
             });
     }
-    ;
 
     // TODO: Pan function, can be better implemented.
     function pan(domNode, direction) {
@@ -160,17 +154,6 @@ function drawDendrogram(e) {
         update(d);
         // centerNode(d);
     }
-
-    function getAllParentalAttributes(d) {
-        if (d.parent) {
-            var s = getAllParentalAttributes(d.parent);
-            s = s + ', ' + d.attributes.toString();
-            return s;
-        } else {
-            return d.attributes.toString();
-        }
-    }
-
 
 
     function update(source) {
