@@ -1,13 +1,14 @@
-function drawVerticalDendrogram(e) {
+function drawVerticalDendrogram(jsonFile) {
 
+	let treeData = JSON.parse(jsonFile);
 	let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
 	// $("#tree-container").height(); //$(document).height();
 	console.log("in drawDendrongram");
 	d3.select("svg").remove();
 	d3.selectAll("li").remove();
 
-	var jsonFile = e.target.result;
-	var treeData = JSON.parse(jsonFile);
+//	var jsonFile = e.target.result;
+//	var treeData = JSON.parse(jsonFile);
 
 	if (attributeSelected) {
 		treeData = prune(treeData, {});
@@ -235,8 +236,8 @@ function drawVerticalDendrogram(e) {
 				.html(
 						function(d) {
 							const max = 800;
-							var objString = "";
-							var attrString = "";
+							let objString = "";
+							let attrString = "";
 
 							if (d._children) {
 								objString = d.objects.toString();
@@ -253,8 +254,6 @@ function drawVerticalDendrogram(e) {
 							if (attrString.length > max)
 								attrString = attrString.substring(0, max)
 										+ '...';
-
-							if (objString.length <3 ) console.log("errror obj string " + objString);
 
 							objString = "Objects:&nbsp;" + objString
 									+ "<br /> <br />";

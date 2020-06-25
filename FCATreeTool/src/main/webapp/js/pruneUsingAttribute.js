@@ -14,9 +14,7 @@ function populateAttributeDropdown(attributeSet) {
 
 function getAllParentalAttributes(d) {
     if (d.parent) {
-        var s = getAllParentalAttributes(d.parent);
-        s = s + ', ' + d.attributes.toString();
-        return s;
+         return getAllParentalAttributes(d.parent) + ', ' + d.attributes.toString();
     } else {
         return d.attributes.toString();
     }
@@ -85,14 +83,13 @@ function getObjectStringForAttributeSelect(d) {
     }
 
     if (isInternalNode) {
-        objStr = d.own_objects.sort().toString();
+        objString = d.own_objects.sort().toString();
 
     } else {
 
         let objectSet = new Set(d.own_objects);
         d.objects.forEach(item => objectSet.add(item));
-
-        objString = Array.from(objectSet).sort().join(', ');
+        objString = Array.from(objectSet).sort();
     }
     return objString;
 }

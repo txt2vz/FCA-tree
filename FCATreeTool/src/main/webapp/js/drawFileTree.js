@@ -1,11 +1,13 @@
-function drawFileTree(e) {
+function drawFileTree(jsonFile) {
+
+    let treeData = JSON.parse(jsonFile);
     let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
     // $("#tree-container").height(); //$(document).height();
     console.log("in drawFileTree V");
     d3.select("svg").remove();
 
-    var jsonFile = e.target.result;
-    var treeData = JSON.parse(jsonFile);
+  //  var jsonFile = e.target.result;
+    //var treeData = e//JSON.parse(jsonFile);
 
     if (attributeSelected) {
         treeData = prune(treeData, {});

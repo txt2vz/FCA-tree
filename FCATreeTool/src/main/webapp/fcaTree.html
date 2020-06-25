@@ -54,6 +54,12 @@
         span {
             white-space: nowrap;
         }
+
+        .highlight {
+            font-weight: bold;
+            color: steelblue;
+        }
+
     </style>
 
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -62,10 +68,10 @@
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
 
     <script type="text/javascript" src="js/pruneUsingAttribute.js" defer></script>
@@ -80,11 +86,11 @@
 <body>
 <div>
     <span id="fcaHead">FCA Tree Tool  &nbsp; &nbsp; &nbsp; </span>
-    <span> 1. Select a valid JSON file:  <input type="file" id="files"/> </span>
+    <span> 1. <span class="highlight">Select</span> a valid JSON file:  <input type="file" id="files"/> </span>
 
     2.
     <button id="upload">Upload and Process File</button> &nbsp;
-    Display type:
+    <span class="highlight"> Display</span> type:
     <select id="treeType">
         <option value="list">expandable list</option>
         <option value="dendrogram">dendrogram</option>
@@ -94,13 +100,13 @@
 </div>
 <div id="line2">
 
-<span id="viewoptions"> &nbsp; Show:
+    <span id="viewoptions"> &nbsp;<span class="highlight"> Show:</span>
 		Attributes: <input type="checkbox" id="attributes" name="attributes">
 		Objects: <input type="checkbox" id="objects" name="objects">
        &nbsp;Object Count: <input type="checkbox" id="objectCount" name="objectCount">
 	</span>
     <span id=attSelectSpan>
-    		&nbsp; Restrict to nodes with attribute or descendent attribute:
+        &nbsp; <span class="highlight">Restrict</span> to nodes with attribute or descendent attribute:
 		<select id="attributeDropdown" name="attributeDropdown">
 			<option>none</option>
 		</select>
@@ -116,7 +122,6 @@
 <div id="tree-container"></div>
 
 <script>
-
     let treeType = $("#treeType").val();
 
     $(document).ready(function () {
@@ -132,7 +137,6 @@
         $("#dendHint").hide();
         $("#verticalHint").hide();
         $("#line2").hide();
-
         $('#objects').val(this.checked);
 
         $("select#treeType").on('change', function () {
@@ -156,56 +160,52 @@
     const fileInput = $('#files');
     const uploadButton = $('#upload');
     const drawButton = $('#draw')
+    let jsonFile;
 
-    function setAtts(e) {
 
-        const jsonFile = e.target.result;
+    function processJSONfile(e) {
+
+        jsonFile = e.target.result;
         const treeData = JSON.parse(jsonFile);
-        populateAttributeDropdown(getSetOfAttributes(treeData, new Set()));
+        populateAttributeDropdown(getSetOfAttributes(treeData, new Set()))
     }
 
-    function reload() {
+    function loadJSONFile() {
 
         if (!window.FileReader) {
             alert('Your browser is not supported')
         }
         const input = fileInput.get(0);
-        console.log("in reoload");
-        $("#line2").show();
+        console.log("in loadJSONFile");
 
         const reader = new FileReader();
         if (input.files.length) {
-            var textFile = input.files[0];
+            $("#line2").show();
+            const textFile = input.files[0];
             reader.readAsText(textFile);
-            $(reader).on('load', setAtts);
-        }
-    }
-
-    function draw() {
-
-        if (!window.FileReader) {
-            alert('Your browser is not supported')
-        }
-        const input = fileInput.get(0);
-        const reader = new FileReader();
-
-        if (input.files.length) {
-            var textFile = input.files[0];
-            reader.readAsText(textFile);
-
-            if (treeType == "list") {
-                $(reader).on('load', drawFileTree);
-            } else if (treeType == "verticalDendrogram") {
-                $(reader).on('load', drawVerticalDendrogram);
-            } else {
-                $(reader).on('load', drawDendrogram);
-            }
+            $(reader).on('load', processJSONfile);
         } else {
             alert('Please select a valid json file before continuing')
         }
     }
 
-    uploadButton.on('click', reload);
+    function draw() {
+
+        switch (treeType) {
+
+            case "list":
+                drawFileTree(jsonFile);
+                break;
+            case "verticalDendrogram":
+                drawVerticalDendrogram(jsonFile);
+                break;
+            case "dendrogram" :
+                drawDendrogram(jsonFile);
+                break;
+        }
+    }
+
+    uploadButton.on('click', loadJSONFile);
     drawButton.on('click', draw);
 
 </script>

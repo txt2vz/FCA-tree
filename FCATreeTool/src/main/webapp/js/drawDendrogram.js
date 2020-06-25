@@ -1,4 +1,5 @@
-function drawDendrogram(e) {
+function drawDendrogram(jsonFile) {
+    let treeData = JSON.parse(jsonFile);
 
     // $("#tree-container").height(); //$(document).height();
     let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
@@ -6,9 +7,6 @@ function drawDendrogram(e) {
     console.log("attributselect " + attributeSelected);
     d3.selectAll("li").remove();
     d3.select("svg").remove();
-
-    var jsonFile = e.target.result;
-    var treeData = JSON.parse(jsonFile);
 
     if (attributeSelected) {
         treeData = prune(treeData, {});
@@ -148,8 +146,6 @@ function drawDendrogram(e) {
 
     // Toggle children on click.
     function click(d) {
-        // if (d3.event.defaultPrevented)
-        // return; // click suppressed
         d = toggleChildren(d);
         update(d);
         // centerNode(d);
@@ -235,9 +231,9 @@ function drawDendrogram(e) {
         node.selectAll("title").remove();
         node.append("svg:title").html(
             function (d) {
-                var max = 800;
-                var objString = "";
-                var attrString = "";
+                const max = 800;
+                let objString = "";
+                let attrString = "";
 
                 objString = d.objects.toString();
                 if (objString.length > max)
@@ -252,7 +248,6 @@ function drawDendrogram(e) {
                 if (d.attributes.toString()) {
                     attrString = "Attributes: " + allParentalAttributes + "<br /> <br />";
                 }
-                ;
 
                 return attrString + objString + "Object Count: "
                     + d.ObjectCount;
@@ -376,4 +371,5 @@ function drawDendrogram(e) {
     // Layout the tree initially and center on the root node.
     update(root);
     // centerNode(root);
-};
+
+}
