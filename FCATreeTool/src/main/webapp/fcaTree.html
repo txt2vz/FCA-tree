@@ -128,6 +128,10 @@
 
         $('#treeType').select2();
 
+        $('#treeType').select2({
+            minimumResultsForSearch: -1
+        });
+
         $("#files").change(function () {
             $("#line2").hide();
         });
@@ -140,20 +144,7 @@
         $('#objects').val(this.checked);
 
         $("select#treeType").on('change', function () {
-
             treeType = $("#treeType").val();
-
-            if (treeType == "verticalDendrogram") {
-                $("#viewoptions").hide();
-            } else {
-                $("#viewoptions").show();
-            }
-
-            if (treeType == "list") {
-                $(".hint").hide();
-            } else {
-                $(".hint").show();
-            }
         });
     });
 
@@ -161,7 +152,6 @@
     const uploadButton = $('#upload');
     const drawButton = $('#draw')
     let jsonFile;
-
 
     function processJSONfile(e) {
 
@@ -194,12 +184,18 @@
         switch (treeType) {
 
             case "list":
+                $("#viewoptions").show();
+                $(".hint").hide();
                 drawFileTree(jsonFile);
                 break;
             case "verticalDendrogram":
+                $("#viewoptions").hide();
+                $(".hint").show();
                 drawVerticalDendrogram(jsonFile);
                 break;
             case "dendrogram" :
+                $("#viewoptions").show();
+                $(".hint").show();
                 drawDendrogram(jsonFile);
                 break;
         }
