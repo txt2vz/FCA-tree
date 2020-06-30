@@ -96,7 +96,6 @@
         <option value="dendrogram">dendrogram</option>
         <option value="verticalDendrogram">vertical dendrogram</option>
     </select>
-
 </div>
 <div id="line2">
 
@@ -117,13 +116,15 @@
 		click and move mouse to move tree </span>
     </span> <span class="hint" id="verticalHint"> Mouse over node to see
 			attribute and object information </span>
-    <span id="loader"><img src = 'images/ajax-loaderBig.gif'></span>
+    <span id="loader"><img src='images/ajax-loaderBig.gif'></span>
 </div>
 
 <div id="tree-container"></div>
 
 <script>
     let treeType = $("#treeType").val();
+    let viewOptions = $("#viewoptions");
+    let hint = $(".hint");
 
     $(document).ready(function () {
 
@@ -136,7 +137,7 @@
         });
 
         $("#attSelectSpan").hide();
-        $("#viewoptions").show();
+        viewOptions.show();
         $("#dendHint").hide();
         $("#verticalHint").hide();
         $("#line2").hide();
@@ -171,10 +172,11 @@
 
         const reader = new FileReader();
         if (input.files.length) {
-            $("#line2").show();
+
             const textFile = input.files[0];
             reader.readAsText(textFile);
             $(reader).on('load', processJSONfile);
+            $("#line2").show();
 
         } else {
             alert('Please select a valid json file before continuing')
@@ -186,36 +188,37 @@
         switch (treeType) {
 
             case "list":
-                $("#viewoptions").show();
-                $(".hint").hide();
+                viewOptions.show();
+                hint.hide();
                 drawFileTree(jsonFile);
                 break;
             case "verticalDendrogram":
-                $("#viewoptions").hide();
-                $(".hint").show();
+                viewOptions.hide();
+                hint.show();
                 drawVerticalDendrogram(jsonFile);
                 break;
             case "dendrogram" :
-                $("#viewoptions").show();
-                $(".hint").show();
-
+                viewOptions.show();
+                hint.show();
                 drawDendrogram(jsonFile);
                 break;
         }
         $('#loader').hide();
     }
 
-    uploadButton.on('click', function(callback){
+    uploadButton.on('click', function (callback) {
             $('#loader').show();
-            setTimeout(function(){
-                loadJSONFile()}, 5);
+            setTimeout(function () {
+                loadJSONFile()
+            }, 5);
         }
     );
 
-    drawButton.on('click', function(callback){
-        $('#loader').show();
-        setTimeout(function(){
-            draw()}, 5);
+    drawButton.on('click', function (callback) {
+            $('#loader').show();
+            setTimeout(function () {
+                draw()
+            }, 5);
         }
     );
 

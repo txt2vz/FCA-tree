@@ -7,9 +7,6 @@ function drawVerticalDendrogram(jsonFile) {
 	d3.select("svg").remove();
 	d3.selectAll("li").remove();
 
-//	var jsonFile = e.target.result;
-//	var treeData = JSON.parse(jsonFile);
-
 	if (attributeSelected) {
 		treeData = prune(treeData, {});
 	}

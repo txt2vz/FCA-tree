@@ -2,11 +2,9 @@ function drawDendrogram(jsonFile) {
 
     let treeData = JSON.parse(jsonFile);
 
-
     // $("#tree-container").height(); //$(document).height();
     let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
     console.log("in drawDendrongram");
-    console.log("attributselect " + attributeSelected);
     d3.selectAll("li").remove();
     d3.select("svg").remove();
 
