@@ -1,5 +1,7 @@
 function drawDendrogram(jsonFile) {
+
     let treeData = JSON.parse(jsonFile);
+
 
     // $("#tree-container").height(); //$(document).height();
     let attributeSelected = $("#attributeDropdown option:selected").text() != "none";
@@ -263,7 +265,7 @@ function drawDendrogram(jsonFile) {
             node.append("text").attr("transform", "translate(15, 12)").text(
                 function (d) {
 
-                    if (attributeSelected) {
+                    if   (attributeSelected) {
                       return  getObjectStringForAttributeSelect(d);
                     }
                     else if (d._children)
@@ -370,6 +372,7 @@ function drawDendrogram(jsonFile) {
 
     // Layout the tree initially and center on the root node.
     update(root);
+
     // centerNode(root);
 
 }

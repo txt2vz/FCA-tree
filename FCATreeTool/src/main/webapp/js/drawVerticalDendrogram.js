@@ -246,7 +246,7 @@ function drawVerticalDendrogram(jsonFile) {
 							};
 
 							if (attributeSelected) {
-								objString=  getObjectStringForAttributeSelect(d);
+								objString=  getObjectStringForAttributeSelect(d).toString();
 							}
 
 							if (objString.length > max)

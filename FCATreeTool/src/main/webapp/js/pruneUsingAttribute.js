@@ -83,15 +83,20 @@ function getObjectStringForAttributeSelect(d) {
     }
 
     if (isInternalNode) {
-        objString = d.own_objects.sort().toString();
+
+       if (d._children)
+            return d.objects.sort();
+        else
+            return d.own_objects.sort();
 
     } else {
 
         let objectSet = new Set(d.own_objects);
         d.objects.forEach(item => objectSet.add(item));
         objString = Array.from(objectSet).sort();
+
     }
-    return objString;
+    return objString.toString();
 }
 
 
