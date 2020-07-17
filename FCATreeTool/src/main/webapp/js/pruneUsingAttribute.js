@@ -20,6 +20,26 @@ function getAllParentalAttributes(d) {
     }
 }
 
+function getAllObjectsFromChildren(d, objectSet, rootN) {
+
+    const c = (rootN) ? d._children : d.children;
+
+    if  (c){
+        for (child of c) {
+
+            if (child.own_objects) {
+              d.own_objects.forEach(obj => objectSet.add(obj));
+            }
+            getAllObjectsFromChildren(child, objectSet, false);
+        }
+    }
+    else {
+        if (d.own_objects) {
+            d.own_objects.forEach(obj => objectSet.add(obj));
+        }
+     }
+}
+
 function getSetOfAttributes(tree, attSet) {
 
     if (tree.attributes) {
@@ -96,6 +116,8 @@ function getObjectStringForAttributeSelect(d) {
         objString = Array.from(objectSet).sort();
 
     }
+
+   // objString = getAllObjectsFromChildren(d).toString() + 'XX';
     return objString.toString();
 }
 

@@ -263,13 +263,17 @@ function drawDendrogram(jsonFile) {
             node.append("text").attr("transform", "translate(15, 12)").text(
                 function (d) {
 
-                    if   (attributeSelected) {
-                      return  getObjectStringForAttributeSelect(d);
-                    }
-                    else if (d._children)
-                        return d.objects.sort();
-                    else
-                        return d.own_objects.sort();
+                    //  if   (attributeSelected) {
+                    //    return  getObjectStringForAttributeSelect(d);
+                    let st = new Set(d.own_objects);
+                    getAllObjectsFromChildren(d, st, true);
+                    objString = Array.from(st).sort();
+                    return objString;
+                    //    }
+                    // else if (d._children)
+                    //     return d.objects.sort();
+                    // else
+                    //     return d.own_objects.sort();
                 });
         }
 
