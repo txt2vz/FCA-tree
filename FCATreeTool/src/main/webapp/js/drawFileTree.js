@@ -161,7 +161,10 @@ function drawFileTree(jsonFile) {
                     if (document.getElementById('objects').checked) {
 
                         if (attributeSelected) {
-                            objString=  getObjectStringForAttributeSelect(d);
+                            //objString=  getObjectStringForAttributeSelect(d);
+                            let st = new Set(d.own_objects);
+                            getAllOwnObjectsFromChildren(d, st, true);
+                            objString = Array.from(st).sort().join(', ');
                         }
 
                         objString = "<span style=color:blue><strong>Objects:&nbsp;</strong>"

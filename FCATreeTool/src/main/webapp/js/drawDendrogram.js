@@ -266,8 +266,8 @@ function drawDendrogram(jsonFile) {
                     //  if   (attributeSelected) {
                     //    return  getObjectStringForAttributeSelect(d);
                     let st = new Set(d.own_objects);
-                    getAllObjectsFromChildren(d, st, true);
-                    objString = Array.from(st).sort();
+                    getAllOwnObjectsFromChildren(d, st, true);
+                    objString = Array.from(st).sort().join(', ');
                     return objString;
                     //    }
                     // else if (d._children)

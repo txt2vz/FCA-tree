@@ -14,30 +14,45 @@ function populateAttributeDropdown(attributeSet) {
 
 function getAllParentalAttributes(d) {
     if (d.parent) {
-         return getAllParentalAttributes(d.parent) + ', ' + d.attributes.toString();
+        return getAllParentalAttributes(d.parent) + ', ' + d.attributes.toString();
     } else {
         return d.attributes.toString();
     }
 }
 
-function getAllObjectsFromChildren(d, objectSet, rootN) {
+function getAllOwnObjectsFromChildren(d, objectSet, rootN) {
 
     const c = (rootN) ? d._children : d.children;
 
-    if  (c){
-        for (child of c) {
+    let isInternalNode = false;
 
-            if (child.own_objects) {
-              d.own_objects.forEach(obj => objectSet.add(obj));
+    if (d.children) {
+        isInternalNode = d.children.length > 0
+    } else if (d._children) {
+        isInternalNode = d._children.length > 0
+    }
+
+    if (isInternalNode) {
+
+        if (c) {
+            for (child of c) {
+
+                if (child.own_objects) {
+                    d.own_objects.forEach(obj => objectSet.add(obj));
+                }
+                getAllOwnObjectsFromChildren(child, objectSet, false);
             }
-            getAllObjectsFromChildren(child, objectSet, false);
+        } else {
+            if (d.own_objects) {
+                d.own_objects.forEach(obj => objectSet.add(obj));
+            }
         }
     }
     else {
-        if (d.own_objects) {
-            d.own_objects.forEach(obj => objectSet.add(obj));
+        if (d.objects) {
+            d.objects.forEach(obj => objectSet.add(obj));
         }
-     }
+    }
 }
 
 function getSetOfAttributes(tree, attSet) {
@@ -104,7 +119,7 @@ function getObjectStringForAttributeSelect(d) {
 
     if (isInternalNode) {
 
-       if (d._children)
+        if (d._children)
             return d.objects.sort();
         else
             return d.own_objects.sort();
@@ -117,7 +132,7 @@ function getObjectStringForAttributeSelect(d) {
 
     }
 
-   // objString = getAllObjectsFromChildren(d).toString() + 'XX';
+    // objString = getAllOwnObjectsFromChildren(d).toString() + 'XX';
     return objString.toString();
 }
 
